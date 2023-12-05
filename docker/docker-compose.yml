@@ -1,0 +1,24 @@
+name: hive
+
+services:
+  mysql:
+    build:
+      context: ../
+      dockerfile: ./docker/mysql/Dockerfile
+    container_name: hive_mysql
+    env_file:
+      - ../.env
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+
+  php:
+    build:
+      context: ../
+      dockerfile: ./docker/php/Dockerfile
+    container_name: hive_php
+    env_file:
+      - ../.env
+    ports:
+      - 8000:8000
+    restart: unless-stopped
