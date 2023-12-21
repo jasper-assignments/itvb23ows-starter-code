@@ -1,7 +1,7 @@
 pipeline {
     agent { docker { image 'php:5.6-cli' } }
     tools {
-        jdk 'openjdk-11'
+        jdk 'openjdk-17'
     }
     stages {
         stage('build') {
