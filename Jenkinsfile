@@ -1,5 +1,8 @@
 pipeline {
     agent { docker { image 'php:5.6-cli-alpine' } }
+    tools {
+        jdk 'openjdk-11'
+    }
     stages {
         stage('build') {
             steps {
