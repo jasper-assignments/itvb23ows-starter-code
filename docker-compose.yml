@@ -3,7 +3,6 @@ name: hive
 services:
   mysql:
     image: mysql:8.3
-    container_name: hive_mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
@@ -16,7 +15,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
-    container_name: hive_php
     environment:
       - PHP_MYSQL_HOSTNAME=${PHP_MYSQL_HOSTNAME}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
