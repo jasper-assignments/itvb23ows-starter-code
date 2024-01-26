@@ -5,6 +5,7 @@ services:
     image: mysql:8.3
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - 3306:3306
     volumes:
@@ -18,6 +19,7 @@ services:
     environment:
       - PHP_MYSQL_HOSTNAME=${PHP_MYSQL_HOSTNAME}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - 8000:8000
     restart: unless-stopped
