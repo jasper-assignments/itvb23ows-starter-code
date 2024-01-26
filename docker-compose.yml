@@ -16,6 +16,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
+    depends_on:
+      - mysql
     environment:
       - PHP_MYSQL_HOSTNAME=${PHP_MYSQL_HOSTNAME}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
