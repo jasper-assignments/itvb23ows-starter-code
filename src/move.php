@@ -52,13 +52,17 @@ if (!isset($board[$from])) {
         }
     }
     if (isset($_SESSION['error'])) {
-        if (isset($board[$from])) array_push($board[$from], $tile);
-        else $board[$from] = [$tile];
+        if (isset($board[$from])) {
+            array_push($board[$from], $tile);
+        } else {
+            $board[$from] = [$tile];
+        }
     } else {
         if (isset($board[$to])) {
             array_push($board[$to], $tile);
+        } else {
+            $board[$to] = [$tile];
         }
-        else $board[$to] = [$tile];
         $_SESSION['player'] = 1 - $_SESSION['player'];
         $db = include_once 'database.php';
         $stmt = $db->prepare('insert into moves (game_id, type, move_from, move_to, previous_id, state) values (?, "move", ?, ?, ?, ?)');
