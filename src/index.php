@@ -187,7 +187,10 @@
         <ol>
             <?php
                 $db = include_once 'database.php';
-                $stmt = $db->prepare('SELECT * FROM moves WHERE game_id = '.$_SESSION['game_id']);
+                $stmt = $db->prepare('
+                    SELECT * FROM moves
+                    WHERE game_id = '.$_SESSION['game_id']
+                );
                 $stmt->execute();
                 $result = $stmt->get_result();
                 while ($row = $result->fetch_array()) {
