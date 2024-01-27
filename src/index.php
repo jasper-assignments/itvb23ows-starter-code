@@ -22,7 +22,7 @@
     if (!count($to)) $to[] = '0,0';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>Hive</title>
         <style>
