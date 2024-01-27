@@ -12,5 +12,3 @@ function set_state($state) {
 }
 
 return new mysqli($_ENV['PHP_MYSQL_HOSTNAME'], 'root', $_ENV['MYSQL_ROOT_PASSWORD'], $_ENV['MYSQL_DATABASE']);
-
-?>
