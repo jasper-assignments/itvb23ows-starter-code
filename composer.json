@@ -1,0 +1,10 @@
+{
+    "name": "jasper-assignments/itvb23ows-starter-code",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
