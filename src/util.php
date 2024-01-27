@@ -43,10 +43,7 @@ function len($tile) {
 }
 
 function slide($board, $from, $to) {
-    if (!hasNeighBour($to, $board)) {
-        return false;
-    }
-    if (!isNeighbour($from, $to)) {
+    if (!hasNeighBour($to, $board) || !isNeighbour($from, $to)) {
         return false;
     }
     $b = explode(',', $to);
