@@ -69,7 +69,8 @@ if (!isset($board[$from])) {
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
             VALUES (?, "move", ?, ?, ?, ?)
         ');
-        $stmt->bind_param('issis', $_SESSION['game_id'], $from, $to, $_SESSION['last_move'], getState());
+        $state = getState();
+        $stmt->bind_param('issis', $_SESSION['game_id'], $from, $to, $_SESSION['last_move'], $state);
         $stmt->execute();
         $_SESSION['last_move'] = $db->insert_id;
     }
