@@ -1,14 +1,14 @@
 <?php
 
-namespace App;
+use App\Controller\DefaultController;
 
 $routes = [
-    '' => ['App\\Controller\\DefaultController', 'index'],
-    'play' => ['App\\Controller\\DefaultController', 'play'],
-    'move' => ['App\\Controller\\DefaultController', 'move'],
-    'pass' => ['App\\Controller\\DefaultController', 'pass'],
-    'restart' => ['App\\Controller\\DefaultController', 'restart'],
-    'undo' => ['App\\Controller\\DefaultController', 'undo'],
+    '' => [DefaultController::class, 'index'],
+    'play' => [DefaultController::class, 'play'],
+    'move' => [DefaultController::class, 'move'],
+    'pass' => [DefaultController::class, 'pass'],
+    'restart' => [DefaultController::class, 'restart'],
+    'undo' => [DefaultController::class, 'undo'],
 ];
 
 return $routes;
