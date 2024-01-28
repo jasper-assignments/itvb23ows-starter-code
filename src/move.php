@@ -5,9 +5,12 @@ use App\Board;
 
 session_start();
 
+/** @var string $from */
 $from = $_POST['from'];
+/** @var string $to */
 $to = $_POST['to'];
 
+/** @var int $player */
 $player = $_SESSION['player'];
 /** @var Board $board */
 $board = $_SESSION['board'];

@@ -18,12 +18,12 @@ class Board
         return $this->tiles;
     }
 
-    public function isPositionEmpty($pos): bool
+    public function isPositionEmpty(string $pos): bool
     {
         return !isset($this->tiles[$pos]);
     }
 
-    public function setPosition($pos, $player, $piece): void
+    public function setPosition(string $pos, int $player, string $piece): void
     {
         $this->tiles[$pos] = [[$player, $piece]];
     }
@@ -33,17 +33,17 @@ class Board
         return array_keys($this->tiles);
     }
 
-    public function isTileOwnedByPlayer($pos, $player): bool
+    public function isTileOwnedByPlayer(string $pos, int $player): bool
     {
         return $this->tiles[$pos][count($this->tiles[$pos])-1][0] == $player;
     }
 
-    public function popTile($pos): array
+    public function popTile(string $pos): array
     {
         return array_pop($this->tiles[$pos]);
     }
 
-    public function pushTile($pos, $tile): void
+    public function pushTile(string $pos, array $tile): void
     {
         if ($this->isPositionEmpty($pos)) {
             $this->tiles[$pos] = [];
@@ -51,7 +51,7 @@ class Board
         array_push($this->tiles[$pos], $tile);
     }
 
-    private function isNeighbour($a, $b): bool
+    private function isNeighbour(string $a, string $b): bool
     {
         $a = explode(',', $a);
         $b = explode(',', $b);
@@ -67,7 +67,7 @@ class Board
         return false;
     }
 
-    public function hasNeighbour($a): bool
+    public function hasNeighbour(string $a): bool
     {
         foreach (array_keys($this->tiles) as $b) {
             if ($this->isNeighbour($a, $b)) {
@@ -77,7 +77,7 @@ class Board
         return false;
     }
 
-    public function neighboursAreSameColor($player, $a): bool
+    public function neighboursAreSameColor(int $player, string $a): bool
     {
         foreach ($this->tiles as $b => $st) {
             if (!$st) {
@@ -91,12 +91,12 @@ class Board
         return true;
     }
 
-    private function len($tile): int
+    private function len(?array $tile): int
     {
         return $tile ? count($tile) : 0;
     }
 
-    public function slide($from, $to): bool
+    public function slide(string $from, string $to): bool
     {
         if (!$this->hasNeighbour($to, $this->tiles) || !$this->isNeighbour($from, $to)) {
             return false;

@@ -12,6 +12,7 @@
 
     /** @var Board $board */
     $board = $_SESSION['board'];
+    /** @var int $player */
     $player = $_SESSION['player'];
     $hand = $_SESSION['hand'];
 
