@@ -87,7 +87,7 @@ class Database
         return $stmt->get_result()->fetch_all();
     }
 
-    public function createMove(int $gameId, string $type, string $moveFrom, string $moveTo, int $lastMoveId): int
+    public function createMove(int $gameId, string $type, string $moveFrom, string $moveTo, ?int $lastMoveId): int
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
@@ -99,7 +99,7 @@ class Database
         return $stmt->insert_id;
     }
 
-    public function createPassMove(int $gameId, int $lastMoveId): int
+    public function createPassMove(int $gameId, ?int $lastMoveId): int
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
