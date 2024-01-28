@@ -11,7 +11,7 @@ function getState() {
     return serialize([$_SESSION['hand'], $board->getTiles(), $_SESSION['player']]);
 }
 
-function setState($state) {
+function setState(string $state) {
     list($a, $b, $c) = unserialize($state);
     $_SESSION['hand'] = $a;
     $_SESSION['board'] = new Board($b);
