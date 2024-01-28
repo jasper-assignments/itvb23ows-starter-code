@@ -4,7 +4,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 EXPOSE 8000
 
 RUN apt-get update \
-  && apt-get install zip \
+  && apt-get install zip -y \
   && apt-get clean
 
 RUN docker-php-ext-install mysqli
