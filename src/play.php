@@ -1,28 +1,31 @@
 <?php
 
-session_start();
+require_once dirname(__DIR__).'/vendor/autoload.php';
 
-include_once 'util.php';
+use App\Board;
+
+session_start();
 
 $piece = $_POST['piece'];
 $to = $_POST['to'];
 
 $player = $_SESSION['player'];
+/** @var Board $board */
 $board = $_SESSION['board'];
 $hand = $_SESSION['hand'][$player];
 
 if (!$hand[$piece]) {
     $_SESSION['error'] = "Player does not have tile";
-} elseif (isset($board[$to])) {
+} elseif (!$board->isPositionEmpty($to)) {
     $_SESSION['error'] = 'Board position is not empty';
-} elseif (count($board) && !hasNeighBour($to, $board)) {
+} elseif (count($board->getTiles()) && !$board->hasNeighbour($to)) {
     $_SESSION['error'] = "board position has no neighbour";
-} elseif (array_sum($hand) < 11 && !neighboursAreSameColor($player, $to, $board)) {
+} elseif (array_sum($hand) < 11 && !$board->neighboursAreSameColor($player, $to)) {
     $_SESSION['error'] = "Board position has opposing neighbour";
 } elseif (array_sum($hand) <= 8 && $hand['Q']) {
     $_SESSION['error'] = 'Must play queen bee';
 } else {
-    $_SESSION['board'][$to] = [[$_SESSION['player'], $piece]];
+    $board->setPosition($to, $_SESSION['player'], $piece);
     $_SESSION['hand'][$player][$piece]--;
     $_SESSION['player'] = 1 - $_SESSION['player'];
     $db = include_once 'database.php';

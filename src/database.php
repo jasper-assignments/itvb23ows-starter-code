@@ -1,13 +1,20 @@
 <?php
 
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+use App\Board;
+
 function getState() {
-    return serialize([$_SESSION['hand'], $_SESSION['board'], $_SESSION['player']]);
+    /** @var Board $board */
+    $board = $_SESSION['board'];
+
+    return serialize([$_SESSION['hand'], $board->getTiles(), $_SESSION['player']]);
 }
 
 function setState($state) {
     list($a, $b, $c) = unserialize($state);
     $_SESSION['hand'] = $a;
-    $_SESSION['board'] = $b;
+    $_SESSION['board'] = new Board($b);
     $_SESSION['player'] = $c;
 }
 

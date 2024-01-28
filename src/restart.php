@@ -1,8 +1,12 @@
 <?php
 
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
+use App\Board;
+
 session_start();
 
-$_SESSION['board'] = [];
+$_SESSION['board'] = new Board();
 $_SESSION['hand'] = [
     0 => [
         "Q" => 1,

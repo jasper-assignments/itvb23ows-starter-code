@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__DIR__).'/vendor/autoload.php';
+
 session_start();
 
 $db = include_once 'database.php';
