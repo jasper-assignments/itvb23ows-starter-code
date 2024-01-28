@@ -1,8 +1,9 @@
 <?php
-require_once dirname(__DIR__).'/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use App\Board;
 use App\Hand;
+use App\Database;
 
 session_start();
 
@@ -63,15 +64,12 @@ if ($board->isPositionEmpty($from)) {
     } else {
         $board->pushTile($to, $tile);
         $_SESSION['player'] = 1 - $_SESSION['player'];
-        $db = include_once 'database.php';
-        $stmt = $db->prepare('
-            INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
-            VALUES (?, "move", ?, ?, ?, ?)
-        ');
-        $state = getState();
-        $stmt->bind_param('issis', $_SESSION['game_id'], $from, $to, $_SESSION['last_move'], $state);
-        $stmt->execute();
-        $_SESSION['last_move'] = $db->insert_id;
+        $_SESSION['last_move'] = Database::getInstance()->createMove(
+            $_SESSION['game_id'],
+            "move",
+            $from, $to,
+            $_SESSION['last_move']
+        );
     }
     $_SESSION['board'] = $board;
 }

@@ -4,6 +4,7 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Board;
 use App\Hand;
+use App\Database;
 
 session_start();
 
@@ -14,11 +15,6 @@ $_SESSION['hand'] = [
 ];
 $_SESSION['player'] = 0;
 
-$db = include_once 'database.php';
-$db->prepare('
-    INSERT INTO games
-    VALUES ()
-')->execute();
-$_SESSION['game_id'] = $db->insert_id;
+$_SESSION['game_id'] = Database::getInstance()->createGame();
 
 header('Location: index.php');
