@@ -70,7 +70,7 @@ class Database
     {
         $stmt = $this->connection->prepare('
             SELECT * FROM moves
-            WHERE id = ' . $_SESSION['last_move']
+            WHERE id = ' . $id
         );
         $stmt->execute();
         return $stmt->get_result()->fetch_array();
