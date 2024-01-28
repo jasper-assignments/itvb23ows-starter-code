@@ -1,9 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Entity;
 
 use mysqli;
-use mysqli_result;
 
 class Database
 {

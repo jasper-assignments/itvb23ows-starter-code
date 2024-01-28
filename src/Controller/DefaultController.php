@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Board;
-use App\Database;
-use App\Hand;
+use App\Entity\Board;
+use App\Entity\Database;
+use App\Entity\Hand;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 

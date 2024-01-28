@@ -1,7 +1,8 @@
 <?php
-    use App\Board;
-    use App\Hand;
-    use App\Database;
+
+    use App\Entity\Board;
+    use App\Entity\Database;
+    use App\Entity\Hand;
 
     session_start();
 
