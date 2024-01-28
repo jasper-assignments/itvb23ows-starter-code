@@ -7,6 +7,7 @@
         }
     },
     "require": {
-      "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "symfony/http-foundation": "^7.0"
     }
 }
