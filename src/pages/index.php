@@ -1,6 +1,4 @@
 <?php
-    require_once dirname(__DIR__).'/vendor/autoload.php';
-
     use App\Board;
     use App\Hand;
     use App\Database;
@@ -8,7 +6,7 @@
     session_start();
 
     if (!isset($_SESSION['board'])) {
-        header('Location: restart.php');
+        header('Location: restart');
         exit(0);
     }
 
@@ -146,7 +144,7 @@
                 }
             ?>
         </div>
-        <form method="post" action="play.php">
+        <form method="post" action="/play">
             <select name="piece">
                 <?php
                     foreach ($hands[$player]->getPieces() as $tile => $ct) {
@@ -163,7 +161,7 @@
             </select>
             <input type="submit" value="Play">
         </form>
-        <form method="post" action="move.php">
+        <form method="post" action="/move">
             <select name="from">
                 <?php
                     foreach ($board->getAllPositions() as $pos) {
@@ -180,10 +178,10 @@
             </select>
             <input type="submit" value="Move">
         </form>
-        <form method="post" action="pass.php">
+        <form method="post" action="/pass">
             <input type="submit" value="Pass">
         </form>
-        <form method="post" action="restart.php">
+        <form method="post" action="/restart">
             <input type="submit" value="Restart">
         </form>
         <strong><?php
@@ -200,7 +198,7 @@
                 }
             ?>
         </ol>
-        <form method="post" action="undo.php">
+        <form method="post" action="/undo">
             <input type="submit" value="Undo">
         </form>
     </body>
