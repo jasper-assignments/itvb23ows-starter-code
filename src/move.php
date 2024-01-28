@@ -2,6 +2,7 @@
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Board;
+use App\Hand;
 
 session_start();
 
@@ -14,6 +15,7 @@ $to = $_POST['to'];
 $player = $_SESSION['player'];
 /** @var Board $board */
 $board = $_SESSION['board'];
+/** @var Hand $hand */
 $hand = $_SESSION['hand'][$player];
 unset($_SESSION['error']);
 
@@ -21,7 +23,7 @@ if ($board->isPositionEmpty($from)) {
     $_SESSION['error'] = 'Board position is empty';
 } elseif (!$board->isTileOwnedByPlayer($from, $player)) {
     $_SESSION['error'] = "Tile is not owned by player";
-} elseif ($hand['Q']) {
+} elseif ($hand->hasPiece('Q')) {
     $_SESSION['error'] = "Queen bee is not played";
 } else {
     $tile = $board->popTile($from);

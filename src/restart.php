@@ -3,25 +3,14 @@
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use App\Board;
+use App\Hand;
 
 session_start();
 
 $_SESSION['board'] = new Board();
 $_SESSION['hand'] = [
-    0 => [
-        "Q" => 1,
-        "B" => 2,
-        "S" => 2,
-        "A" => 3,
-        "G" => 3,
-    ],
-    1 => [
-        "Q" => 1,
-        "B" => 2,
-        "S" => 2,
-        "A" => 3,
-        "G" => 3,
-    ],
+    0 => new Hand(),
+    1 => new Hand(),
 ];
 $_SESSION['player'] = 0;
 
