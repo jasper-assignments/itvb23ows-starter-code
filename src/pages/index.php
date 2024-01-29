@@ -6,13 +6,13 @@
 
     session_start();
 
-    if (!isset($_SESSION['game'])) {
+    if (!isset($_SESSION['game_state'])) {
         header('Location: restart');
         exit(0);
     }
 
-    /** @var Game $game */
-    $game = $_SESSION['game'];
+    $database = new Database();
+    $game = Game::createFromState($database, $_SESSION['game_state']);
 
     $board = $game->getBoard();
     $hands = $game->getHands();
@@ -193,7 +193,7 @@
         ?></strong>
         <ol>
             <?php
-                $result = Database::getInstance()->findMovesByGameId($game->getId());
+                $result = $database->findMovesByGameId($game->getId());
                 foreach ($result as $row) {
                     echo '<li>'.$row[2].' '.$row[3].' '.$row[4].'</li>';
                 }

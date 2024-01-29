@@ -6,16 +6,6 @@ use mysqli;
 
 class Database
 {
-    private static ?Database $instance;
-
-    public static function getInstance(): Database
-    {
-        if (!isset(self::$instance)) {
-            self::$instance = new Database();
-        }
-        return self::$instance;
-    }
-
     private mysqli $connection;
 
     public function __construct()

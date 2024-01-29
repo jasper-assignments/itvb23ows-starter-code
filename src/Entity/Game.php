@@ -6,6 +6,8 @@ use App\Exception\InvalidMoveException;
 
 class Game
 {
+    private Database $database;
+
     private int $id;
     private Board $board;
     /** @var Hand[] $hands */
@@ -13,16 +15,50 @@ class Game
     private int $currentPlayer;
 
     public function __construct(
+        Database $database,
         int $id = null,
         Board $board = null,
         array $hands = null,
         int $currentPlayer = 0
     )
     {
+        $this->database = $database;
+
         $this->id = $id ?? $this->database->createGame();
         $this->board = $board ?? new Board();
         $this->hands = $hands ?? [0 => new Hand(), 1 => new Hand()];
         $this->currentPlayer = $currentPlayer;
+    }
+
+    public static function createFromState(Database $database, string $rawState): Game
+    {
+        $state = unserialize($rawState);
+        return new Game(
+            $database,
+            $state['id'],
+            $state['board'],
+            $state['hands'],
+            $state['currentPlayer']
+        );
+    }
+
+    public function getState(): string
+    {
+        return serialize([
+            'id' => $this->id,
+            'board' => $this->board,
+            'hands' => $this->hands,
+            'currentPlayer' => $this->currentPlayer,
+        ]);
+    }
+
+    public function setState(string $rawState): void
+    {
+        $state = unserialize($rawState);
+        $this->id = $state['id'];
+        $this->board = $state['board'];
+        $this->hands = $state['hands'];
+        $this->currentPlayer = $state['currentPlayer'];
     }
 
     public function getId(): int
@@ -46,26 +82,6 @@ class Game
     public function getCurrentPlayer(): int
     {
         return $this->currentPlayer;
-    }
-
-    public function getState(): string
-    {
-        return serialize([
-            [0 => $this->hands[0]->getPieces(), 1 => $this->hands[1]->getPieces()],
-            $this->board->getTiles(),
-            $this->currentPlayer,
-        ]);
-    }
-
-    public function setState(string $state): void
-    {
-        list($a, $b, $c) = unserialize($state);
-        $this->hands = [
-            0 => new Hand($a[0]),
-            1 => new Hand($a[1]),
-        ];
-        $this->board = new Board($b);
-        $this->currentPlayer = $c;
     }
 
     private function switchCurrentPlayer(): void
@@ -97,7 +113,7 @@ class Game
             $this->board->setPosition($to, $this->currentPlayer, $piece);
             $hand->removePiece($piece);
             $this->switchCurrentPlayer();
-            $_SESSION['last_move'] = Database::getInstance()->createMove(
+            $_SESSION['last_move'] = $this->database->createMove(
                 $this,
                 "play",
                 $piece,
@@ -158,7 +174,7 @@ class Game
             } else {
                 $this->board->pushTile($to, $tile);
                 $this->switchCurrentPlayer();
-                $_SESSION['last_move'] = Database::getInstance()->createMove(
+                $_SESSION['last_move'] = $this->database->createMove(
                     $this,
                     "move",
                     $from, $to,
@@ -170,7 +186,7 @@ class Game
 
     public function pass(): void
     {
-        $_SESSION['last_move'] = Database::getInstance()->createPassMove(
+        $_SESSION['last_move'] = $this->database->createPassMove(
             $this,
             $_SESSION['last_move']
         );
@@ -179,7 +195,7 @@ class Game
 
     public function undo(): void
     {
-        $result = Database::getInstance()->findMoveById($_SESSION['last_move']);
+        $result = $this->database->findMoveById($_SESSION['last_move']);
         $_SESSION['last_move'] = $result[5];
         $this->setState($result[6]);
     }

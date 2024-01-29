@@ -10,6 +10,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController
 {
+    private Database $database;
+
+    public function __construct(Database $database)
+    {
+        $this->database = $database;
+    }
+
     public function index(): Response
     {
         return render_template("index");
@@ -24,13 +31,13 @@ class DefaultController
         /** @var string $to */
         $to = $_POST['to'];
 
-        /** @var Game $game */
-        $game = $_SESSION['game'];
+        $game = Game::createFromState($this->database, $_SESSION['game_state']);
         try {
             $game->play($piece, $to);
         } catch (InvalidMoveException $exception) {
             $_SESSION['error'] = $exception->getMessage();
         }
+        $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse("/");
     }
@@ -46,13 +53,13 @@ class DefaultController
 
         unset($_SESSION['error']);
 
-        /** @var Game $game */
-        $game = $_SESSION['game'];
+        $game = Game::createFromState($this->database, $_SESSION['game_state']);
         try {
             $game->move($from, $to);
         } catch (InvalidMoveException $exception) {
             $_SESSION['error'] = $exception->getMessage();
         }
+        $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse("/");
     }
@@ -61,9 +68,9 @@ class DefaultController
     {
         session_start();
 
-        /** @var Game $game */
-        $game = $_SESSION['game'];
+        $game = Game::createFromState($this->database, $_SESSION['game_state']);
         $game->pass();
+        $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse("/");
     }
@@ -71,7 +78,10 @@ class DefaultController
     public function restart(): Response
     {
         session_start();
-        $_SESSION['game'] = new Game();
+
+        $game = new Game($this->database);
+        $_SESSION['game_state'] = $game->getState();
+
         return new RedirectResponse("/");
     }
 
@@ -79,9 +89,9 @@ class DefaultController
     {
         session_start();
 
-        /** @var Game $game */
-        $game = $_SESSION['game'];
+        $game = Game::createFromState($this->database, $_SESSION['game_state']);
         $game->undo();
+        $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse("/");
     }

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use App\Entity\Database;
 use Symfony\Component\HttpFoundation\Response;
 
 function render_template(string $name): Response
@@ -22,7 +23,8 @@ if (!isset($routes[$path])) {
 } else {
     try {
         [$controller, $method] = $routes[$path];
-        $response = call_user_func([new $controller, $method]);
+        $database = new Database();
+        $response = call_user_func([new $controller($database), $method]);
     } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }
