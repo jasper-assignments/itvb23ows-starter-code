@@ -34,7 +34,9 @@ class Database
             INSERT INTO games
             VALUES ()
         ');
+
         $stmt->execute();
+
         return $stmt->insert_id;
     }
 
@@ -42,9 +44,12 @@ class Database
     {
         $stmt = $this->connection->prepare('
             SELECT * FROM moves
-            WHERE id = ' . $id
-        );
+            WHERE id = ?
+        ');
+
+        $stmt->bind_param('i', $id);
         $stmt->execute();
+
         return $stmt->get_result()->fetch_array();
     }
 
@@ -52,9 +57,12 @@ class Database
     {
         $stmt = $this->connection->prepare('
             SELECT * FROM moves
-            WHERE game_id = ' . $gameId
-        );
+            WHERE game_id = ?
+        ');
+
+        $stmt->bind_param('i', $gameId);
         $stmt->execute();
+
         return $stmt->get_result()->fetch_all();
     }
 
@@ -78,13 +86,14 @@ class Database
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
-            VALUES (?, "pass", null, null, ?, ?)
+            VALUES (?, ?, null, null, ?, ?)
         ');
 
         $state = $game->getState();
         $gameId = $game->getId();
+        $type = 'pass';
 
-        $stmt->bind_param('iis', $gameId, $lastMoveId, $state);
+        $stmt->bind_param('isis', $gameId, $type, $lastMoveId, $state);
         $stmt->execute();
 
         return $stmt->insert_id;
