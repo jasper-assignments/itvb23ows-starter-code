@@ -11,8 +11,7 @@
         exit(0);
     }
 
-    $database = new Database();
-    $game = Game::createFromState($database, $_SESSION['game_state']);
+    $game = Game::createFromState(new Database(), $_SESSION['game_state']);
 
     $board = $game->getBoard();
     $hands = $game->getHands();
@@ -193,8 +192,8 @@
         ?></strong>
         <ol>
             <?php
-                $result = $database->findMovesByGameId($game->getId());
-                foreach ($result as $row) {
+                $moves = $game->getAllMoves();
+                foreach ($moves as $row) {
                     echo '<li>'.$row[2].' '.$row[3].' '.$row[4].'</li>';
                 }
             ?>

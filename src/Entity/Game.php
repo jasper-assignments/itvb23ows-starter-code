@@ -199,4 +199,9 @@ class Game
         $_SESSION['last_move'] = $result[5];
         $this->setState($result[6]);
     }
+
+    public function getAllMoves(): array
+    {
+        return $this->database->findMovesByGameId($this->id);
+    }
 }
