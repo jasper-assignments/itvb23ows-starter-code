@@ -81,7 +81,10 @@ class Game
             throw new InvalidMoveException('Board position is not empty');
         } elseif (count($this->board->getTiles()) && !$this->board->hasNeighbour($to)) {
             throw new InvalidMoveException('board position has no neighbour');
-        } elseif ($this->hands[$this->currentPlayer]->getTotalSum() < 11 && !$this->board->neighboursAreSameColor($this->currentPlayer, $to)) {
+        } elseif (
+            $this->hands[$this->currentPlayer]->getTotalSum() < 11 &&
+            !$this->board->neighboursAreSameColor($this->currentPlayer, $to)
+        ) {
             throw new InvalidMoveException('Board position has opposing neighbour');
         } elseif ($this->hands[$this->currentPlayer]->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
             throw new InvalidMoveException('Must play queen bee');
