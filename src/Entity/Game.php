@@ -63,6 +63,11 @@ class Game
         $this->currentPlayer = $c;
     }
 
+    private function switchCurrentPlayer(): void
+    {
+        $this->currentPlayer = 1 - $this->currentPlayer;
+    }
+
     /**
      * @throws InvalidMoveException
      */
@@ -83,7 +88,7 @@ class Game
         } else {
             $this->board->setPosition($to, $this->currentPlayer, $piece);
             $hand->removePiece($piece);
-            $this->currentPlayer = 1 - $this->currentPlayer;
+            $this->switchCurrentPlayer();
             $_SESSION['last_move'] = Database::getInstance()->createMove(
                 $this,
                 "play",
@@ -144,7 +149,7 @@ class Game
                 $this->board->pushTile($from, $tile);
             } else {
                 $this->board->pushTile($to, $tile);
-                $this->currentPlayer = 1 - $this->currentPlayer;
+                $this->switchCurrentPlayer();
                 $_SESSION['last_move'] = Database::getInstance()->createMove(
                     $this,
                     "move",
@@ -161,6 +166,6 @@ class Game
             $this,
             $_SESSION['last_move']
         );
-        $this->currentPlayer = 1 - $this->currentPlayer;
+        $this->switchCurrentPlayer();
     }
 }
