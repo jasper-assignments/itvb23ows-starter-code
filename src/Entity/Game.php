@@ -12,9 +12,14 @@ class Game
     private array $hands;
     private int $currentPlayer;
 
-    public function __construct(Board $board = null, array $hands = null, int $currentPlayer = 0)
+    public function __construct(
+        int $id = null,
+        Board $board = null,
+        array $hands = null,
+        int $currentPlayer = 0
+    )
     {
-        $this->id = Database::getInstance()->createGame();
+        $this->id = $id ?? $this->database->createGame();
         $this->board = $board ?? new Board();
         $this->hands = $hands ?? [0 => new Hand(), 1 => new Hand()];
         $this->currentPlayer = $currentPlayer;
