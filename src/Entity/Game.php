@@ -171,4 +171,11 @@ class Game
         );
         $this->switchCurrentPlayer();
     }
+
+    public function undo(): void
+    {
+        $result = Database::getInstance()->findMoveById($_SESSION['last_move']);
+        $_SESSION['last_move'] = $result[5];
+        $this->setState($result[6]);
+    }
 }

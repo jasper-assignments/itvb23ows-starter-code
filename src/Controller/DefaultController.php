@@ -79,12 +79,9 @@ class DefaultController
     {
         session_start();
 
-        $result = Database::getInstance()->findMoveById($_SESSION['last_move']);
-        $_SESSION['last_move'] = $result[5];
-
         /** @var Game $game */
         $game = $_SESSION['game'];
-        $game->setState($result[6]);
+        $game->undo();
 
         return new RedirectResponse("/");
     }
