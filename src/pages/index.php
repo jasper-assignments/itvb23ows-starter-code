@@ -2,21 +2,21 @@
 
     use App\Entity\Board;
     use App\Entity\Database;
-    use App\Entity\Hand;
+    use App\Entity\Game;
 
     session_start();
 
-    if (!isset($_SESSION['board'])) {
+    if (!isset($_SESSION['game'])) {
         header('Location: restart');
         exit(0);
     }
 
-    /** @var Board $board */
-    $board = $_SESSION['board'];
-    /** @var int $player */
-    $player = $_SESSION['player'];
-    /** @var Hand[] $hands */
-    $hands = $_SESSION['hand'];
+    /** @var Game $game */
+    $game = $_SESSION['game'];
+
+    $board = $game->getBoard();
+    $hands = $game->getHands();
+    $currentPlayer = $game->getCurrentPlayer();
 
     $to = [];
     foreach (Board::OFFSETS as $pq) {
@@ -138,7 +138,7 @@
         </div>
         <div class="turn">
             Turn: <?php
-                if ($player == 0) {
+                if ($currentPlayer == 0) {
                     echo "White";
                 } else {
                     echo "Black";
@@ -148,7 +148,7 @@
         <form method="post" action="/play">
             <select name="piece">
                 <?php
-                    foreach ($hands[$player]->getPieces() as $tile => $ct) {
+                    foreach ($hands[$currentPlayer]->getPieces() as $tile => $ct) {
                         echo "<option value=\"$tile\">$tile</option>";
                     }
                 ?>
@@ -193,7 +193,7 @@
         ?></strong>
         <ol>
             <?php
-                $result = Database::getInstance()->findMovesByGameId($_SESSION['game_id']);
+                $result = Database::getInstance()->findMovesByGameId($game->getId());
                 foreach ($result as $row) {
                     echo '<li>'.$row[2].' '.$row[3].' '.$row[4].'</li>';
                 }
