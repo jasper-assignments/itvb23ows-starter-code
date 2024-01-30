@@ -172,11 +172,11 @@ class Game
         } elseif (count($this->board->getTiles()) && !$this->board->hasNeighbour($to)) {
             $errorMessage = 'board position has no neighbour';
         } elseif (
-            $this->hands[$this->currentPlayer]->getTotalSum() < 11 &&
+            $hand->getTotalSum() < 11 &&
             !$this->board->neighboursAreSameColor($this->currentPlayer, $to)
         ) {
             $errorMessage = 'Board position has opposing neighbour';
-        } elseif ($this->hands[$this->currentPlayer]->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
+        } elseif ($hand->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
             $errorMessage = 'Must play queen bee';
         }
 
