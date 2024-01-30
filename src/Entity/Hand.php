@@ -34,6 +34,11 @@ class Hand
         $this->pieces[$piece]--;
     }
 
+    public function getAvailablePieces(): array
+    {
+        return array_filter($this->pieces);
+    }
+
     public function getTotalSum(): int
     {
         return array_sum($this->pieces);
