@@ -9,6 +9,7 @@ pipeline {
             }
         }
         stage('Unit Tests') {
+            agent { docker { image 'php:8.3-cli' } }
             steps {
                 unstash name: 'vendor'
                 sh 'vendor/bin/phpunit'
