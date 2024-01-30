@@ -33,6 +33,11 @@ class Board
         return array_keys($this->tiles);
     }
 
+    public function getAllPositionsOwnedByPlayer(int $player): array
+    {
+        return array_filter($this->getAllPositions(), fn($pos) => $this->isTileOwnedByPlayer($pos, $player));
+    }
+
     public function getCurrentTileOnPosition(string $pos): array
     {
         return $this->tiles[$pos][count($this->tiles[$pos])-1];
