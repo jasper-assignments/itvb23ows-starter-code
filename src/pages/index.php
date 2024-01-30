@@ -1,6 +1,5 @@
 <?php
 
-    use App\Entity\Board;
     use App\Entity\Database;
     use App\Entity\Game;
 
@@ -16,18 +15,6 @@
     $board = $game->getBoard();
     $hands = $game->getHands();
     $currentPlayer = $game->getCurrentPlayer();
-
-    $to = [];
-    foreach (Board::OFFSETS as $pq) {
-        foreach ($board->getAllPositions() as $pos) {
-            $pq2 = explode(',', $pos);
-            $to[] = ($pq[0] + $pq2[0]).','.($pq[1] + $pq2[1]);
-        }
-    }
-    $to = array_unique($to);
-    if (!count($to)) {
-        $to[] = '0,0';
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,7 +141,7 @@
             </select>
             <select name="to">
                 <?php
-                    foreach ($to as $pos) {
+                    foreach ($game->getToPositions() as $pos) {
                         echo "<option value=\"$pos\">$pos</option>";
                     }
                 ?>
@@ -171,7 +158,7 @@
             </select>
             <select name="to">
                 <?php
-                    foreach ($to as $pos) {
+                    foreach ($game->getToPositions() as $pos) {
                         echo "<option value=\"$pos\">$pos</option>";
                     }
                 ?>
