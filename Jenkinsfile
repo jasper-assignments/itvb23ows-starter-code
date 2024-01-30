@@ -7,6 +7,20 @@ pipeline {
                 sh 'composer install --ignore-platform-reqs'
             }
         }
+        stage('Unit Tests') {
+            steps {
+                sh 'vendor/bin/phpunit'
+                xunit([
+                    thresholds: [
+                        failed ( failureThreshold: "0" ),
+                        skipped ( unstableThreshold: "0" )
+                    ],
+                    tools: [
+                        PHPUnit(pattern: 'build/logs/junit.xml', stopProcessingIfError: true, failIfNotNew: true)
+                    ]
+                ])
+            }
+        }
         stage('SonarQube Analysis') {
             tools {
                 jdk 'openjdk-17'
