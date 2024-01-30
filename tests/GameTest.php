@@ -93,4 +93,23 @@ class GameTest extends TestCase
         // assert
         $this->assertEmpty(array_diff($validPlayPositions, $playPositions));
     }
+
+    #[DataProvider('dataProvider')]
+    public function testValidPlayPositionsContainsAllValidPlaysWithProvider(
+        Board $board,
+        array $hands,
+        int $currentPlayer,
+        array $validPlayPositions
+    )
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+
+        // act
+        $playPositions = $game->getValidPlayPositions();
+
+        // assert
+        $this->assertEmpty(array_diff($playPositions, $validPlayPositions));
+    }
 }
