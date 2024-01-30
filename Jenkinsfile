@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
-            agent { docker { image 'php:5.6-cli' } }
+        stage('Install dependencies') {
+            agent { docker { image 'composer:2.6' } }
             steps {
-                sh 'php --version'
+                sh 'composer install'
             }
         }
         stage('SonarQube Analysis') {
