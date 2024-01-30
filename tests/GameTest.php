@@ -91,6 +91,6 @@ class GameTest extends TestCase
         $playPositions = $game->getValidPlayPositions();
 
         // assert
-        $this->assertEmpty(array_diff($playPositions, $validPlayPositions));
+        $this->assertEmpty(array_diff($validPlayPositions, $playPositions));
     }
 }
