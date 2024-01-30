@@ -249,4 +249,9 @@ class Game
         }
         return $to;
     }
+
+    public function getValidPlayPositions(): array
+    {
+        return array_filter($this->getToPositions(), fn($pos) => $this->isPlayValid($pos)[0]);
+    }
 }
