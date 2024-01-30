@@ -70,7 +70,7 @@ class GameTest extends TestCase
                     ]),
                 ],
                 'currentPlayer' => 1,
-                'validPlayPositions' => ['0,2', '1,3', '1,1', '-2,3'],
+                'validPlayPositions' => ['0,2', '-1,3', '1,1', '-2,3'],
             ]
         ];
     }
