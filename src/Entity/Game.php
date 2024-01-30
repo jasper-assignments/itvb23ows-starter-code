@@ -96,31 +96,21 @@ class Game
     {
         $hand = $this->hands[$this->currentPlayer];
 
-        if (!$hand->hasPiece($piece)) {
-            throw new InvalidMoveException('Player does not have tile');
-        } elseif (!$this->board->isPositionEmpty($to)) {
-            throw new InvalidMoveException('Board position is not empty');
-        } elseif (count($this->board->getTiles()) && !$this->board->hasNeighbour($to)) {
-            throw new InvalidMoveException('board position has no neighbour');
-        } elseif (
-            $this->hands[$this->currentPlayer]->getTotalSum() < 11 &&
-            !$this->board->neighboursAreSameColor($this->currentPlayer, $to)
-        ) {
-            throw new InvalidMoveException('Board position has opposing neighbour');
-        } elseif ($this->hands[$this->currentPlayer]->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
-            throw new InvalidMoveException('Must play queen bee');
-        } else {
-            $this->board->setPosition($to, $this->currentPlayer, $piece);
-            $hand->removePiece($piece);
-            $this->switchCurrentPlayer();
-            $_SESSION['last_move'] = $this->database->createMove(
-                $this,
-                "play",
-                $piece,
-                $to,
-                $_SESSION['last_move']
-            );
+        [$valid, $err] = $this->isPlayValid($hand, $piece, $to);
+        if (!$valid) {
+            throw new InvalidMoveException($err);
         }
+
+        $this->board->setPosition($to, $this->currentPlayer, $piece);
+        $hand->removePiece($piece);
+        $this->switchCurrentPlayer();
+        $_SESSION['last_move'] = $this->database->createMove(
+            $this,
+            "play",
+            $piece,
+            $to,
+            $_SESSION['last_move']
+        );
     }
 
     /**
@@ -201,5 +191,28 @@ class Game
     public function getAllMoves(): array
     {
         return $this->database->findMovesByGameId($this->id);
+    }
+
+    /**
+     * @return array{bool, ?string}
+     */
+    public function isPlayValid(Hand $hand, string $piece, string $to): array
+    {
+        $errorMessage = null;
+        if (!$hand->hasPiece($piece)) {
+            $errorMessage = 'Player does not have tile';
+        } elseif (!$this->board->isPositionEmpty($to)) {
+            $errorMessage = 'Board position is not empty';
+        } elseif (count($this->board->getTiles()) && !$this->board->hasNeighbour($to)) {
+            $errorMessage = 'board position has no neighbour';
+        } elseif (
+            $this->hands[$this->currentPlayer]->getTotalSum() < 11 &&
+            !$this->board->neighboursAreSameColor($this->currentPlayer, $to)
+        ) {
+            $errorMessage = 'Board position has opposing neighbour';
+        } elseif ($this->hands[$this->currentPlayer]->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
+            $errorMessage = 'Must play queen bee';
+        }
+        return [$errorMessage == null, $errorMessage];
     }
 }
