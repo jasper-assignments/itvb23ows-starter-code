@@ -96,7 +96,11 @@ class Game
     {
         $hand = $this->hands[$this->currentPlayer];
 
-        [$valid, $err] = $this->isPlayValid($hand, $piece, $to);
+        if (!$hand->hasPiece($piece)) {
+            throw new InvalidMoveException('Player does not have tile');
+        }
+
+        [$valid, $err] = $this->isPlayValid($to);
         if (!$valid) {
             throw new InvalidMoveException($err);
         }
@@ -160,13 +164,12 @@ class Game
     /**
      * @return array{bool, ?string}
      */
-    public function isPlayValid(Hand $hand, string $piece, string $to): array
+    public function isPlayValid(string $to): array
     {
         $errorMessage = null;
+        $hand = $this->hands[$this->currentPlayer];
 
-        if (!$hand->hasPiece($piece)) {
-            $errorMessage = 'Player does not have tile';
-        } elseif (!$this->board->isPositionEmpty($to)) {
+        if (!$this->board->isPositionEmpty($to)) {
             $errorMessage = 'Board position is not empty';
         } elseif (count($this->board->getTiles()) && !$this->board->hasNeighbour($to)) {
             $errorMessage = 'board position has no neighbour';
