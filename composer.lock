@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48584d89c3283913e383fb705daf8d76",
+    "content-hash": "0f80bb7377c9840f39c45df04e66e07a",
     "packages": [
         {
             "name": "symfony/http-foundation",
@@ -1953,6 +1953,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
+        "php": "^8.3",
         "ext-mysqli": "*"
     },
     "platform-dev": [],
