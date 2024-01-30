@@ -137,7 +137,7 @@ class Game
         } elseif ($hand->hasPiece('Q')) {
             throw new InvalidMoveException('Queen bee is not played');
         } else {
-            $tile = $this->board->popTile($from);
+            $tile = $this->board->getCurrentTileOnPosition($from);
             if (!$this->board->hasNeighbour($to)) {
                 throw new InvalidMoveException('Move would split hive');
             } else {
@@ -169,18 +169,16 @@ class Game
                     }
                 }
             }
-            if (isset($_SESSION['error'])) {
-                $this->board->pushTile($from, $tile);
-            } else {
-                $this->board->pushTile($to, $tile);
-                $this->switchCurrentPlayer();
-                $_SESSION['last_move'] = $this->database->createMove(
-                    $this,
-                    "move",
-                    $from, $to,
-                    $_SESSION['last_move']
-                );
-            }
+
+            $tile = $this->board->popTile($from);
+            $this->board->pushTile($to, $tile);
+            $this->switchCurrentPlayer();
+            $_SESSION['last_move'] = $this->database->createMove(
+                $this,
+                "move",
+                $from, $to,
+                $_SESSION['last_move']
+            );
         }
     }
 
