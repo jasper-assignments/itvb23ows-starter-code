@@ -122,9 +122,7 @@ class Game
      */
     public function move(string $from, string $to): void
     {
-        $hand = $this->hands[$this->currentPlayer];
-
-        [$valid, $err] = $this->isMoveValid($hand, $from, $to);
+        [$valid, $err] = $this->isMoveValid($from, $to);
         if (!$valid) {
             throw new InvalidMoveException($err);
         }
@@ -188,9 +186,10 @@ class Game
     /**
      * @return array{bool, ?string}
      */
-    public function isMoveValid(Hand $hand, string $from, string $to): array
+    public function isMoveValid(string $from, string $to): array
     {
         $errorMessage = null;
+        $hand = $this->hands[$this->currentPlayer];
 
         if ($this->board->isPositionEmpty($from)) {
             $errorMessage = 'Board position is empty';
