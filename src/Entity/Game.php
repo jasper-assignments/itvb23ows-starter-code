@@ -237,6 +237,7 @@ class Game
 
     public function getToPositions(): array
     {
+        $to = [];
         foreach (Board::OFFSETS as $pq) {
             foreach ($this->board->getAllPositions() as $pos) {
                 $pq2 = explode(',', $pos);
