@@ -5,10 +5,12 @@ pipeline {
             agent { docker { image 'composer:2.6' } }
             steps {
                 sh 'composer install --ignore-platform-reqs'
+                stash name: 'vendor', includes: 'vendor/**'
             }
         }
         stage('Unit Tests') {
             steps {
+                unstash name: 'vendor'
                 sh 'vendor/bin/phpunit'
                 xunit([
                     thresholds: [
