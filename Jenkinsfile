@@ -4,7 +4,7 @@ pipeline {
         stage('Install dependencies') {
             agent { docker { image 'composer:2.6' } }
             steps {
-                sh 'composer install'
+                sh 'composer install --ignore-platform-reqs'
             }
         }
         stage('SonarQube Analysis') {
