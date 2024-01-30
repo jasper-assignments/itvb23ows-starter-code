@@ -23,8 +23,8 @@ class GameTest extends TestCase
             ],
             'only 2 queens' => [
                 'board' => new Board([
-                    '0,0' => [0, 'Q'],
-                    '0,1' => [1, 'Q'],
+                    '0,0' => [[0, 'Q']],
+                    '0,1' => [[1, 'Q']],
                 ]),
                 'hands' => [
                     0 => new Hand([
@@ -47,11 +47,11 @@ class GameTest extends TestCase
             ],
             '3 moves for white, 2 moves for black' => [
                 'board' => new Board([
-                    '0,0' => [0, 'Q'],
-                    '0,1' => [1, 'Q'],
-                    '0,-1' => [0, 'B'],
-                    '-1,2' => [1, 'B'],
-                    '1,-1' => [0, 'S'],
+                    '0,0' => [[0, 'Q']],
+                    '0,1' => [[1, 'Q']],
+                    '0,-1' => [[0, 'B']],
+                    '-1,2' => [[1, 'B']],
+                    '1,-1' => [[0, 'S']],
                 ]),
                 'hands' => [
                     0 => new Hand([
