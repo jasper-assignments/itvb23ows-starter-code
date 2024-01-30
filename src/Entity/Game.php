@@ -120,56 +120,20 @@ class Game
     {
         $hand = $this->hands[$this->currentPlayer];
 
-        if ($this->board->isPositionEmpty($from)) {
-            throw new InvalidMoveException('Board position is empty');
-        } elseif (!$this->board->isTileOwnedByPlayer($from, $this->currentPlayer)) {
-            throw new InvalidMoveException('Tile is not owned by player');
-        } elseif ($hand->hasPiece('Q')) {
-            throw new InvalidMoveException('Queen bee is not played');
-        } else {
-            $tile = $this->board->getCurrentTileOnPosition($from);
-            if (!$this->board->hasNeighbour($to)) {
-                throw new InvalidMoveException('Move would split hive');
-            } else {
-                $all = $this->board->getAllPositions();
-                $queue = [array_shift($all)];
-                while ($queue) {
-                    $next = explode(',', array_shift($queue));
-                    foreach (Board::OFFSETS as $pq) {
-                        list($p, $q) = $pq;
-                        $p += $next[0];
-                        $q += $next[1];
-                        if (in_array("$p,$q", $all)) {
-                            $queue[] = "$p,$q";
-                            $all = array_diff($all, ["$p,$q"]);
-                        }
-                    }
-                }
-                if ($all) {
-                    throw new InvalidMoveException('Move would split hive');
-                } else {
-                    if ($from == $to) {
-                        throw new InvalidMoveException('Tile must move');
-                    } elseif (!$this->board->isPositionEmpty($to) && $tile[1] != "B") {
-                        throw new InvalidMoveException('Tile not empty');
-                    } elseif ($tile[1] == "Q" || $tile[1] == "B") {
-                        if (!$this->board->slide($from, $to)) {
-                            throw new InvalidMoveException('Tile must slide');
-                        }
-                    }
-                }
-            }
-
-            $tile = $this->board->popTile($from);
-            $this->board->pushTile($to, $tile);
-            $this->switchCurrentPlayer();
-            $_SESSION['last_move'] = $this->database->createMove(
-                $this,
-                "move",
-                $from, $to,
-                $_SESSION['last_move']
-            );
+        [$valid, $err] = $this->isMoveValid($hand, $from, $to);
+        if (!$valid) {
+            throw new InvalidMoveException($err);
         }
+
+        $tile = $this->board->popTile($from);
+        $this->board->pushTile($to, $tile);
+        $this->switchCurrentPlayer();
+        $_SESSION['last_move'] = $this->database->createMove(
+            $this,
+            "move",
+            $from, $to,
+            $_SESSION['last_move']
+        );
     }
 
     public function pass(): void
@@ -199,6 +163,7 @@ class Game
     public function isPlayValid(Hand $hand, string $piece, string $to): array
     {
         $errorMessage = null;
+
         if (!$hand->hasPiece($piece)) {
             $errorMessage = 'Player does not have tile';
         } elseif (!$this->board->isPositionEmpty($to)) {
@@ -213,6 +178,58 @@ class Game
         } elseif ($this->hands[$this->currentPlayer]->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
             $errorMessage = 'Must play queen bee';
         }
+
+        return [$errorMessage == null, $errorMessage];
+    }
+
+    /**
+     * @return array{bool, ?string}
+     */
+    public function isMoveValid(Hand $hand, string $from, string $to): array
+    {
+        $errorMessage = null;
+
+        if ($this->board->isPositionEmpty($from)) {
+            $errorMessage = 'Board position is empty';
+        } elseif (!$this->board->isTileOwnedByPlayer($from, $this->currentPlayer)) {
+            $errorMessage = 'Tile is not owned by player';
+        } elseif ($hand->hasPiece('Q')) {
+            $errorMessage = 'Queen bee is not played';
+        } else {
+            $tile = $this->board->getCurrentTileOnPosition($from);
+            if (!$this->board->hasNeighbour($to)) {
+                $errorMessage = 'Move would split hive';
+            } else {
+                $all = $this->board->getAllPositions();
+                $queue = [array_shift($all)];
+                while ($queue) {
+                    $next = explode(',', array_shift($queue));
+                    foreach (Board::OFFSETS as $pq) {
+                        list($p, $q) = $pq;
+                        $p += $next[0];
+                        $q += $next[1];
+                        if (in_array("$p,$q", $all)) {
+                            $queue[] = "$p,$q";
+                            $all = array_diff($all, ["$p,$q"]);
+                        }
+                    }
+                }
+                if ($all) {
+                    $errorMessage = 'Move would split hive';
+                } else {
+                    if ($from == $to) {
+                        $errorMessage = 'Tile must move';
+                    } elseif (!$this->board->isPositionEmpty($to) && $tile[1] != "B") {
+                        $errorMessage = 'Tile not empty';
+                    } elseif ($tile[1] == "Q" || $tile[1] == "B") {
+                        if (!$this->board->slide($from, $to)) {
+                            $errorMessage = 'Tile must slide';
+                        }
+                    }
+                }
+            }
+        }
+
         return [$errorMessage == null, $errorMessage];
     }
 }
