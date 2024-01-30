@@ -87,7 +87,10 @@ class GameTest extends TestCase
         $databaseMock = Mockery::mock(Database::class);
         $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
 
+        // act
+        $playPositions = $game->getValidPlayPositions();
+
         // assert
-        $this->assertEmpty(array_diff($game->getValidPlayPositions(), $validPlayPositions));
+        $this->assertEmpty(array_diff($playPositions, $validPlayPositions));
     }
 }
