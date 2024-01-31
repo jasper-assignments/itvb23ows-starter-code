@@ -50,7 +50,11 @@ class Board
 
     public function popTile(string $pos): array
     {
-        return array_pop($this->tiles[$pos]);
+        $tile = array_pop($this->tiles[$pos]);
+        if (!count($this->tiles[$pos])) {
+            unset($this->tiles[$pos]);
+        }
+        return $tile;
     }
 
     public function pushTile(string $pos, array $tile): void
