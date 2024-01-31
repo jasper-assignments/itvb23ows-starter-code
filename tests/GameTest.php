@@ -29,18 +29,18 @@ class GameTest extends TestCase
                 ]),
                 'hands' => [
                     0 => new Hand([
-                        "Q" => 0,
-                        "B" => 2,
-                        "S" => 2,
-                        "A" => 3,
-                        "G" => 3,
+                        'Q' => 0,
+                        'B' => 2,
+                        'S' => 2,
+                        'A' => 3,
+                        'G' => 3,
                     ]),
                     1 => new Hand([
-                        "Q" => 0,
-                        "B" => 2,
-                        "S" => 2,
-                        "A" => 3,
-                        "G" => 3,
+                        'Q' => 0,
+                        'B' => 2,
+                        'S' => 2,
+                        'A' => 3,
+                        'G' => 3,
                     ]),
                 ],
                 'currentPlayer' => 0,
@@ -56,18 +56,18 @@ class GameTest extends TestCase
                 ]),
                 'hands' => [
                     0 => new Hand([
-                        "Q" => 0,
-                        "B" => 1,
-                        "S" => 1,
-                        "A" => 3,
-                        "G" => 3,
+                        'Q' => 0,
+                        'B' => 1,
+                        'S' => 1,
+                        'A' => 3,
+                        'G' => 3,
                     ]),
                     1 => new Hand([
-                        "Q" => 0,
-                        "B" => 1,
-                        "S" => 2,
-                        "A" => 3,
-                        "G" => 3,
+                        'Q' => 0,
+                        'B' => 1,
+                        'S' => 2,
+                        'A' => 3,
+                        'G' => 3,
                     ]),
                 ],
                 'currentPlayer' => 1,
@@ -124,18 +124,18 @@ class GameTest extends TestCase
         ]);
         $hands = [
             0 => new Hand([
-                "Q" => 0,
-                "B" => 2,
-                "S" => 2,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 2,
+                'S' => 2,
+                'A' => 3,
+                'G' => 3,
             ]),
             1 => new Hand([
-                "Q" => 0,
-                "B" => 2,
-                "S" => 2,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 2,
+                'S' => 2,
+                'A' => 3,
+                'G' => 3,
             ]),
         ];
         $game = new Game($databaseMock, -1, $board, $hands, 0);
@@ -161,18 +161,18 @@ class GameTest extends TestCase
         ]);
         $hands = [
             0 => new Hand([
-                "Q" => 0,
-                "B" => 0,
-                "S" => 2,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 0,
+                'S' => 2,
+                'A' => 3,
+                'G' => 3,
             ]),
             1 => new Hand([
-                "Q" => 0,
-                "B" => 1,
-                "S" => 1,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 1,
+                'S' => 1,
+                'A' => 3,
+                'G' => 3,
             ]),
         ];
         $game = new Game($databaseMock, -1, $board, $hands, 1);
@@ -198,18 +198,18 @@ class GameTest extends TestCase
         ]);
         $hands = [
             0 => new Hand([
-                "Q" => 0,
-                "B" => 0,
-                "S" => 2,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 0,
+                'S' => 2,
+                'A' => 3,
+                'G' => 3,
             ]),
             1 => new Hand([
-                "Q" => 0,
-                "B" => 1,
-                "S" => 1,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 0,
+                'B' => 1,
+                'S' => 1,
+                'A' => 3,
+                'G' => 3,
             ]),
         ];
         $game = new Game($databaseMock, -1, $board, $hands, 1);
@@ -236,18 +236,18 @@ class GameTest extends TestCase
             ]),
             [
                 0 => new Hand([
-                    "Q" => 0,
-                    "B" => 1,
-                    "S" => 2,
-                    "A" => 3,
-                    "G" => 3,
+                    'Q' => 0,
+                    'B' => 1,
+                    'S' => 2,
+                    'A' => 3,
+                    'G' => 3,
                 ]),
                 1 => new Hand([
-                    "Q" => 0,
-                    "B" => 1,
-                    "S" => 2,
-                    "A" => 3,
-                    "G" => 3,
+                    'Q' => 0,
+                    'B' => 1,
+                    'S' => 2,
+                    'A' => 3,
+                    'G' => 3,
                 ]),
             ],
             0
@@ -280,18 +280,18 @@ class GameTest extends TestCase
         ]);
         $hands = [
             0 => new Hand([
-                "Q" => 1,
-                "B" => 0,
-                "S" => 1,
-                "A" => 3,
-                "G" => 3,
+                'Q' => 1,
+                'B' => 0,
+                'S' => 1,
+                'A' => 3,
+                'G' => 3,
             ]),
             1 => new Hand([
-                "Q" => 1,
-                "B" => 0,
-                "S" => 2,
-                "A" => 2,
-                "G" => 3,
+                'Q' => 1,
+                'B' => 0,
+                'S' => 2,
+                'A' => 2,
+                'G' => 3,
             ]),
         ];
         $game = new Game($databaseMock, -1, $board, $hands, 0);

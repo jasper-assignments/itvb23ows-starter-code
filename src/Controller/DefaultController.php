@@ -19,7 +19,7 @@ class DefaultController
 
     public function index(): Response
     {
-        return render_template("index");
+        return render_template('index');
     }
 
     public function play(): Response
@@ -39,7 +39,7 @@ class DefaultController
         }
         $_SESSION['game_state'] = $game->getState();
 
-        return new RedirectResponse("/");
+        return new RedirectResponse('/');
     }
 
     public function move(): Response
@@ -61,7 +61,7 @@ class DefaultController
         }
         $_SESSION['game_state'] = $game->getState();
 
-        return new RedirectResponse("/");
+        return new RedirectResponse('/');
     }
 
     public function pass(): Response
@@ -72,7 +72,7 @@ class DefaultController
         $game->pass();
         $_SESSION['game_state'] = $game->getState();
 
-        return new RedirectResponse("/");
+        return new RedirectResponse('/');
     }
 
     public function restart(): Response
@@ -82,7 +82,7 @@ class DefaultController
         $game = new Game($this->database);
         $_SESSION['game_state'] = $game->getState();
 
-        return new RedirectResponse("/");
+        return new RedirectResponse('/');
     }
 
     public function undo(): Response
@@ -93,6 +93,6 @@ class DefaultController
         $game->undo();
         $_SESSION['game_state'] = $game->getState();
 
-        return new RedirectResponse("/");
+        return new RedirectResponse('/');
     }
 }

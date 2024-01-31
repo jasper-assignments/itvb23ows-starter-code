@@ -107,7 +107,7 @@
             <?php
                 foreach ($hands[0]->getPieces() as $tile => $ct) {
                     for ($i = 0; $i < $ct; $i++) {
-                        echo '<div class="tile player0"><span>'.$tile."</span></div> ";
+                        echo '<div class="tile player0"><span>'.$tile.'</span></div> ';
                     }
                 }
             ?>

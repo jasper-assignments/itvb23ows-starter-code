@@ -115,7 +115,7 @@ class Board
         foreach (self::OFFSETS as $pq) {
             $p = $b[0] + $pq[0];
             $q = $b[1] + $pq[1];
-            $neighbour = $p . "," . $q;
+            $neighbour = "$p,$q";
             if (!$this->isPositionEmpty($neighbour) && $this->isNeighbour($from, $neighbour)) {
                 $common[] = $neighbour;
             }
