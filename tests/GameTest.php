@@ -4,6 +4,7 @@ use App\Entity\Board;
 use App\Entity\Database;
 use App\Entity\Game;
 use App\Entity\Hand;
+use App\Exception\InvalidMoveException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -263,5 +264,44 @@ class GameTest extends TestCase
 
         // assert
         $this->assertTrue($valid);
+    }
+
+    public function testQueenMustBePlayedOnFourthTurn()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board([
+            '1,-1' => [[0, 'S']],
+            '-1,0' => [[0, 'B']],
+            '0,0' => [[0, 'B']],
+            '0,1' => [[1, 'B']],
+            '1,1' => [[1, 'B']],
+            '-1,2' => [[1, 'A']],
+        ]);
+        $hands = [
+            0 => new Hand([
+                "Q" => 1,
+                "B" => 0,
+                "S" => 1,
+                "A" => 3,
+                "G" => 3,
+            ]),
+            1 => new Hand([
+                "Q" => 1,
+                "B" => 0,
+                "S" => 2,
+                "A" => 2,
+                "G" => 3,
+            ]),
+        ];
+        $game = new Game($databaseMock, -1, $board, $hands, 0);
+
+        // expect
+        // This test follows Arrange, Expect, Act rather than the usual Arrange, Act, Assert
+        // due to it expecting an exception. More info: https://docs.phpunit.de/en/10.5/fixtures.html
+        $this->expectException(InvalidMoveException::class);
+
+        // act
+        $game->play('S', '0,-1');
     }
 }
