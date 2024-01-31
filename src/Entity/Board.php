@@ -105,18 +105,22 @@ class Board
 
     public function slide(string $from, string $to): bool
     {
-        if (!$this->hasNeighbour($to, $this->tiles) || !$this->isNeighbour($from, $to)) {
+        if (!$this->hasNeighbour($to) || !$this->isNeighbour($from, $to)) {
             return false;
         }
+
+        // Find the common neighbours between the to position and from position
         $b = explode(',', $to);
         $common = [];
         foreach (self::OFFSETS as $pq) {
             $p = $b[0] + $pq[0];
             $q = $b[1] + $pq[1];
-            if ($this->isNeighbour($from, $p . "," . $q)) {
-                $common[] = $p . "," . $q;
+            $neighbour = $p . "," . $q;
+            if (!$this->isPositionEmpty($neighbour) && $this->isNeighbour($from, $neighbour)) {
+                $common[] = $neighbour;
             }
         }
+
         if (
             !isset($this->tiles[$common[0]]) &&
             !isset($this->tiles[$common[1]]) &&
