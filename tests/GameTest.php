@@ -113,6 +113,39 @@ class GameTest extends TestCase
         $this->assertEmpty(array_diff($playPositions, $validPlayPositions));
     }
 
+    public function testSlideIsPossibleForQueenWithOnlyQueenAsNeighbour()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board([
+            '0,0' => [[0, 'Q']],
+            '1,0' => [[1, 'Q']],
+        ]);
+        $hands = [
+            0 => new Hand([
+                "Q" => 0,
+                "B" => 2,
+                "S" => 2,
+                "A" => 3,
+                "G" => 3,
+            ]),
+            1 => new Hand([
+                "Q" => 0,
+                "B" => 2,
+                "S" => 2,
+                "A" => 3,
+                "G" => 3,
+            ]),
+        ];
+        $game = new Game($databaseMock, -1, $board, $hands, 0);
+
+        // act
+        [$valid, $err] = $game->isMoveValid('0,0', '0,1');
+
+        // assert
+        $this->assertTrue($valid);
+    }
+
     public function testPlayOnPositionThatWasMoved()
     {
         // arrange
