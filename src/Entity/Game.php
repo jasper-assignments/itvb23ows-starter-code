@@ -100,6 +100,11 @@ class Game
             throw new InvalidMoveException('Player does not have tile');
         }
 
+        // Ensure queen bee must be played in the fourth turn
+        if ($piece != 'Q' && $hand->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
+            throw new InvalidMoveException('Must play queen bee');
+        }
+
         [$valid, $err] = $this->isPlayValid($to);
         if (!$valid) {
             throw new InvalidMoveException($err);
@@ -176,8 +181,6 @@ class Game
             !$this->board->neighboursAreSameColor($this->currentPlayer, $to)
         ) {
             $errorMessage = 'Board position has opposing neighbour';
-        } elseif ($hand->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
-            $errorMessage = 'Must play queen bee';
         }
 
         return [$errorMessage == null, $errorMessage];
