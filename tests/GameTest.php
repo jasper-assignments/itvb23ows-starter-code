@@ -112,4 +112,49 @@ class GameTest extends TestCase
         // assert
         $this->assertEmpty(array_diff($playPositions, $validPlayPositions));
     }
+
+    public function testPlayOnPositionThatWasMoved()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $game = new Game(
+            $databaseMock,
+            -1,
+            new Board([
+                '0,0' => [[0, 'Q']],
+                '0,1' => [[1, 'Q']],
+                '0,-1' => [[0, 'B']],
+                '0,2' => [[1, 'B']],
+            ]),
+            [
+                0 => new Hand([
+                    "Q" => 0,
+                    "B" => 1,
+                    "S" => 2,
+                    "A" => 3,
+                    "G" => 3,
+                ]),
+                1 => new Hand([
+                    "Q" => 0,
+                    "B" => 1,
+                    "S" => 2,
+                    "A" => 3,
+                    "G" => 3,
+                ]),
+            ],
+            0
+        );
+        $databaseMock->allows()
+            ->createMove($game, 'move', '0,-1', '0,0', null)
+            ->andReturn(1);
+        $databaseMock->allows()->createPassMove($game, 1);
+
+        // act
+        $game->move('0,-1', '0,0');
+        $game->pass();
+        [$valid, $err] = $game->isPlayValid('0,-1');
+
+        // assert
+        $this->assertTrue($valid);
+    }
 }
