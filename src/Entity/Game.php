@@ -190,6 +190,7 @@ class Game
     {
         $errorMessage = null;
         $hand = $this->hands[$this->currentPlayer];
+        $tile = null;
 
         if ($this->board->isPositionEmpty($from)) {
             $errorMessage = 'Board position is empty';
@@ -198,7 +199,7 @@ class Game
         } elseif ($hand->hasPiece('Q')) {
             $errorMessage = 'Queen bee is not played';
         } else {
-            $tile = $this->board->getCurrentTileOnPosition($from);
+            $tile = $this->board->popTile($from);
             if (!$this->board->hasNeighbour($to)) {
                 $errorMessage = 'Move would split hive';
             } else {
@@ -232,6 +233,9 @@ class Game
             }
         }
 
+        if ($tile != null) {
+            $this->board->pushTile($from, $tile);
+        }
         return [$errorMessage == null, $errorMessage];
     }
 
