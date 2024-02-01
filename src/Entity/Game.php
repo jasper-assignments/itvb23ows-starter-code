@@ -206,7 +206,7 @@ class Game
             $errorMessage = 'Move would split hive';
         } else {
             $tile = $this->board->getCurrentTileOnPosition($from);
-            if ($tile[1] == 'Q' || $tile[1] == 'B' || $tile[1] == 'G') {
+            if ($tile[1] == 'Q' || $tile[1] == 'B' || $tile[1] == 'G' || $tile[1] == 'S') {
                 try {
                     $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
                     if (!$piece->isMoveValid($from, $to)) {

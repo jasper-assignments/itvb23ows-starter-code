@@ -15,6 +15,7 @@ abstract class AbstractPiece
         return match ($letter) {
             'Q' => new QueenBee($board),
             'B' => new Beetle($board),
+            'S' => new SoldierAnt($board),
             default => throw new Exception("Piece with letter '$letter' does not exist"),
         };
     }
