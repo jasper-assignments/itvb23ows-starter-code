@@ -65,4 +65,19 @@ class BoardSpec extends TestCase
         // assert
         $this->assertTrue($valid);
     }
+
+    #[Test]
+    public function givenGrasshopperStraightDestinationOnDownwardDiagonalThenMoveValidIsTrue()
+    {
+        // arrange
+        $board = new Board();
+        $from = '0,0';
+        $to = '2,-2';
+
+        // act
+        $valid = $board->isGrasshopperMoveValid($from, $to);
+
+        // assert
+        $this->assertTrue($valid);
+    }
 }
