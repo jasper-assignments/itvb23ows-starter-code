@@ -63,4 +63,27 @@ class SoldierAntSpec extends TestCase
         // assert
         $this->assertFalse($valid);
     }
+
+    #[Test]
+    public function givenPositionThatCannotBeSlidOutOfThenMoveValidIsFalse()
+    {
+        // arrange
+        $board = new Board([
+            '1,-1' => [[0, 'B']],
+            '2,-1' => [[0, 'Q']],
+            '1,0' => [[1, 'S']],
+            '2,0' => [[0, 'B']],
+            '0,1' => [[1, 'S']],
+            '1,1' => [[1, 'B']],
+        ]);
+        $soldierAnt = new SoldierAnt($board);
+        $from = '1,0';
+        $to = '0,0';
+
+        // act
+        $valid = $soldierAnt->isMoveValid($from, $to);
+
+        // assert
+        $this->assertFalse($valid);
+    }
 }
