@@ -1,11 +1,13 @@
 <?php
 
 use App\Entity\Board;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class BoardSpec extends TestCase
 {
-    public function givenGrasshopperStraightDestinationThenMoveValidIsTrue(): void
+    #[Test]
+    public function givenGrasshopperStraightDestinationThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board();
