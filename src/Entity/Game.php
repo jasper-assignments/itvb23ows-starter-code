@@ -195,7 +195,6 @@ class Game
     {
         $errorMessage = null;
         $hand = $this->hands[$this->currentPlayer];
-        $tile = null;
 
         if ($this->board->isPositionEmpty($from)) {
             $errorMessage = 'Board position is empty';
@@ -207,7 +206,7 @@ class Game
             $errorMessage = 'Move would split hive';
         } else {
             try {
-                $tile = $this->board->popTile($from);
+                $tile = $this->board->getCurrentTileOnPosition($from);
                 $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
                 if (!$piece->isMoveValid($from, $to)) {
                     $errorMessage = $piece->getErrorMessage();
@@ -217,9 +216,6 @@ class Game
             }
         }
 
-        if ($tile != null) {
-            $this->board->pushTile($from, $tile);
-        }
         return [$errorMessage == null, $errorMessage];
     }
 
