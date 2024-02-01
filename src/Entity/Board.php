@@ -137,4 +137,9 @@ class Board
                 $this->len($this->tiles[$to] ?? [])
             );
     }
+
+    public function isGrasshopperMoveValid(string $from, string $to): bool
+    {
+        return true;
+    }
 }
