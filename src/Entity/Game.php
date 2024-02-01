@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Exception\InvalidMoveException;
+use App\Piece\AbstractPiece;
+use Exception;
 
 class Game
 {
@@ -223,14 +225,13 @@ class Game
                 if ($all) {
                     $errorMessage = 'Move would split hive';
                 } else {
-                    if ($from == $to) {
-                        $errorMessage = 'Tile must move';
-                    } elseif (!$this->board->isPositionEmpty($to) && $tile[1] != 'B') {
-                        $errorMessage = 'Tile not empty';
-                    } elseif ($tile[1] == 'Q' || $tile[1] == 'B') {
-                        if (!$this->board->slide($from, $to)) {
-                            $errorMessage = 'Tile must slide';
+                    try {
+                        $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
+                        if (!$piece->isMoveValid($from, $to)) {
+                            $errorMessage = $piece->getErrorMessage();
                         }
+                    } catch (Exception $exception) {
+                        $errorMessage = $exception->getMessage();
                     }
                 }
             }
