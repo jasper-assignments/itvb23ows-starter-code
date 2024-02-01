@@ -115,7 +115,10 @@ class Board
         }
 
         // Find the common neighbours between the to position and from position
-        $common = array_filter($this->getEmptyNeighbourPositions($to), fn($pos) => $this->isNeighbour($from, $pos));
+        $common = array_filter(
+            $this->getNeighbourPositions($to, fn($neighbour) => !$this->isPositionEmpty($neighbour)),
+            fn($pos) => $this->isNeighbour($from, $pos)
+        );
 
         if (
             !isset($this->tiles[$common[0]]) &&
@@ -134,7 +137,7 @@ class Board
             );
     }
 
-    public function getEmptyNeighbourPositions(string $pos): array
+    public function getNeighbourPositions(string $pos, Callable $filterFunction): array
     {
         $b = explode(',', $pos);
         $neighbours = [];
@@ -142,7 +145,7 @@ class Board
             $p = $b[0] + $pq[0];
             $q = $b[1] + $pq[1];
             $neighbour = "$p,$q";
-            if (!$this->isPositionEmpty($neighbour)) {
+            if ($filterFunction($neighbour)) {
                 $neighbours[] = $neighbour;
             }
         }
