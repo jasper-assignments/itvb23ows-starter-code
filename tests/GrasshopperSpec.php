@@ -12,7 +12,8 @@ class GrasshopperSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'G']]
+            '0,0' => [[0, 'G']],
+            '0,1' => [[1, 'Q']],
         ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
@@ -30,7 +31,8 @@ class GrasshopperSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'G']]
+            '0,0' => [[0, 'G']],
+            '1,0' => [[1, 'Q']],
         ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
@@ -48,7 +50,7 @@ class GrasshopperSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'G']]
+            '0,0' => [[0, 'G']],
         ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
@@ -66,7 +68,8 @@ class GrasshopperSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'G']]
+            '0,0' => [[0, 'G']],
+            '1,1' => [[1, 'Q']],
         ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
@@ -84,7 +87,8 @@ class GrasshopperSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'G']]
+            '0,0' => [[0, 'G']],
+            '1,-1' => [[1, 'Q']],
         ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
