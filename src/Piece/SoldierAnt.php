@@ -4,7 +4,6 @@ namespace App\Piece;
 
 class SoldierAnt extends AbstractPiece
 {
-
     public function isMoveValid(string $from, string $to): bool
     {
         $board = clone $this->board;
@@ -15,6 +14,9 @@ class SoldierAnt extends AbstractPiece
             return false;
         } elseif (!$board->isPositionEmpty($to)) {
             $this->setErrorMessage('Tile not empty');
+            return false;
+        } elseif (!$board->slide($from, $to)) {
+            $this->setErrorMessage('Tile must slide');
             return false;
         }
         return true;
