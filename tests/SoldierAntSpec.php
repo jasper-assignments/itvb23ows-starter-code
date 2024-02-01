@@ -13,7 +13,7 @@ class SoldierAntSpec extends TestCase
         // arrange
         $board = new Board([
             '1,-1' => [[0, 'Q']],
-            '0,0' => [[0, 'S']],
+            '0,0' => [[0, 'A']],
             '1,0' => [[1, 'Q']],
         ]);
         $soldierAnt = new SoldierAnt($board);
@@ -32,7 +32,7 @@ class SoldierAntSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'S']],
+            '0,0' => [[0, 'A']],
         ]);
         $soldierAnt = new SoldierAnt($board);
         $from = '0,0';
@@ -50,7 +50,7 @@ class SoldierAntSpec extends TestCase
     {
         // arrange
         $board = new Board([
-            '0,0' => [[0, 'S']],
+            '0,0' => [[0, 'A']],
             '0,1' => [[1, 'Q']],
         ]);
         $soldierAnt = new SoldierAnt($board);
@@ -71,7 +71,7 @@ class SoldierAntSpec extends TestCase
         $board = new Board([
             '1,-1' => [[0, 'B']],
             '2,-1' => [[0, 'Q']],
-            '1,0' => [[1, 'S']],
+            '1,0' => [[1, 'A']],
             '2,0' => [[0, 'B']],
             '0,1' => [[1, 'S']],
             '1,1' => [[1, 'B']],
@@ -93,7 +93,7 @@ class SoldierAntSpec extends TestCase
         // arrange
         $board = new Board([
             '1,-1' => [[0, 'Q']],
-            '0,0' => [[0, 'S']],
+            '0,0' => [[0, 'A']],
             '1,0' => [[1, 'Q']],
         ]);
         $soldierAnt = new SoldierAnt($board);
