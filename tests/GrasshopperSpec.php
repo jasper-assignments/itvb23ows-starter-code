@@ -11,7 +11,9 @@ class GrasshopperSpec extends TestCase
     public function givenGrasshopperStraightDestinationOnXAxisThenMoveValidIsTrue()
     {
         // arrange
-        $board = new Board();
+        $board = new Board([
+            '0,0' => [[0, 'G']]
+        ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '0,2';
@@ -27,7 +29,9 @@ class GrasshopperSpec extends TestCase
     public function givenGrasshopperStraightDestinationOnYAxisThenMoveValidIsTrue()
     {
         // arrange
-        $board = new Board();
+        $board = new Board([
+            '0,0' => [[0, 'G']]
+        ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,0';
@@ -43,7 +47,9 @@ class GrasshopperSpec extends TestCase
     public function givenGrasshopperNonStraightDestinationThenMoveValidIsFalse()
     {
         // arrange
-        $board = new Board();
+        $board = new Board([
+            '0,0' => [[0, 'G']]
+        ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '3,-2';
@@ -59,7 +65,9 @@ class GrasshopperSpec extends TestCase
     public function givenGrasshopperStraightDestinationOnUpwardDiagonalThenMoveValidIsTrue()
     {
         // arrange
-        $board = new Board();
+        $board = new Board([
+            '0,0' => [[0, 'G']]
+        ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,2';
@@ -75,7 +83,9 @@ class GrasshopperSpec extends TestCase
     public function givenGrasshopperStraightDestinationOnDownwardDiagonalThenMoveValidIsTrue()
     {
         // arrange
-        $board = new Board();
+        $board = new Board([
+            '0,0' => [[0, 'G']]
+        ]);
         $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,-2';
