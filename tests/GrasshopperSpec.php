@@ -138,7 +138,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenOccupiedPlaceAsDestinationThenMoveValidIsFalse()
+    public function givenOccupiedPositionAsDestinationThenMoveValidIsFalse()
     {
         // arrange
         $board = new Board([
