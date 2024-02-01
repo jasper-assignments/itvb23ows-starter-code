@@ -10,7 +10,7 @@ class QueenBee extends AbstractPiece
             $this->setErrorMessage('Tile must move');
             return false;
         } elseif (!$this->board->isPositionEmpty($to)) {
-            $this->setErrorMessage('Tile note empty');
+            $this->setErrorMessage('Tile not empty');
             return false;
         } elseif (!$this->board->slide($from, $to)) {
             $this->setErrorMessage('Tile must slide');
