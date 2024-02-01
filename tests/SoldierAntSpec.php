@@ -12,7 +12,9 @@ class SoldierAntSpec extends TestCase
     {
         // arrange
         $board = new Board([
+            '1,-1' => [[0, 'Q']],
             '0,0' => [[0, 'S']],
+            '1,0' => [[1, 'Q']],
         ]);
         $soldierAnt = new SoldierAnt($board);
         $from = '0,0';
