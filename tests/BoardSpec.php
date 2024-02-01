@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 class BoardSpec extends TestCase
 {
     #[Test]
-    public function givenGrasshopperStraightDestinationThenMoveValidIsTrue()
+    public function givenGrasshopperStraightDestinationOnYAxisThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board();
