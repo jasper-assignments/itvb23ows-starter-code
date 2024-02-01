@@ -65,6 +65,25 @@ class SoldierAntSpec extends TestCase
     }
 
     #[Test]
+    public function givenEmptyPositionAsDestinationThenMoveValidIsTrue()
+    {
+        // arrange
+        $board = new Board([
+            '0,0' => [[0, 'A']],
+            '0,1' => [[1, 'Q']],
+        ]);
+        $soldierAnt = new SoldierAnt($board);
+        $from = '0,0';
+        $to = '1,0';
+
+        // act
+        $valid = $soldierAnt->isMoveValid($from, $to);
+
+        // assert
+        $this->assertTrue($valid);
+    }
+
+    #[Test]
     public function givenPositionThatCannotBeSlidOutOfThenMoveValidIsFalse()
     {
         // arrange
