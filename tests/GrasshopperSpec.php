@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class GrasshopperSpec extends TestCase
 {
     #[Test]
-    public function givenGrasshopperStraightDestinationOnXAxisThenMoveValidIsTrue()
+    public function givenStraightDestinationOnXAxisThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
@@ -26,7 +26,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenGrasshopperStraightDestinationOnYAxisThenMoveValidIsTrue()
+    public function givenStraightDestinationOnYAxisThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
@@ -44,7 +44,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenGrasshopperNonStraightDestinationThenMoveValidIsFalse()
+    public function givenNonStraightDestinationThenMoveValidIsFalse()
     {
         // arrange
         $board = new Board([
@@ -62,7 +62,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenGrasshopperStraightDestinationOnUpwardDiagonalThenMoveValidIsTrue()
+    public function givenStraightDestinationOnUpwardDiagonalThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
@@ -80,7 +80,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenGrasshopperStraightDestinationOnDownwardDiagonalThenMoveValidIsTrue()
+    public function givenStraightDestinationOnDownwardDiagonalThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
