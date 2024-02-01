@@ -143,8 +143,8 @@ class Board
         [$fromX, $fromY] = explode(',', $from);
         [$toX, $toY] = explode(',', $to);
 
-        // Check if line is straight on Y axis
-        if ($fromY == $toY) {
+        // Check if line is straight on X or Y axis
+        if ($fromX == $toX || $fromY == $toY) {
             return true;
         }
 
