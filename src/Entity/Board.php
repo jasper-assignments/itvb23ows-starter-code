@@ -140,6 +140,15 @@ class Board
 
     public function isGrasshopperMoveValid(string $from, string $to): bool
     {
+        if (!$this->isMoveStraight($from, $to)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isMoveStraight(string $from, string $to): bool
+    {
         [$fromX, $fromY] = explode(',', $from);
         [$toX, $toY] = explode(',', $to);
 
