@@ -138,6 +138,34 @@ class Board
             );
     }
 
+    public function willMoveSplitHive(string $from, string $to): bool
+    {
+        $board = clone $this;
+        $board->popTile($from);
+        if (!$board->hasNeighbour($to)) {
+            return true;
+        } else {
+            $all = $board->getAllPositions();
+            $queue = [array_shift($all)];
+            while ($queue) {
+                $next = explode(',', array_shift($queue));
+                foreach (Board::OFFSETS as $pq) {
+                    list($p, $q) = $pq;
+                    $p += $next[0];
+                    $q += $next[1];
+                    if (in_array("$p,$q", $all)) {
+                        $queue[] = "$p,$q";
+                        $all = array_diff($all, ["$p,$q"]);
+                    }
+                }
+            }
+            if ($all) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function isGrasshopperMoveValid(string $from, string $to): bool
     {
         if (!$this->isMoveStraight($from, $to)) {

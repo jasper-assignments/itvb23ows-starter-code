@@ -203,37 +203,17 @@ class Game
             $errorMessage = 'Tile is not owned by player';
         } elseif ($hand->hasPiece('Q')) {
             $errorMessage = 'Queen bee is not played';
+        } elseif ($this->board->willMoveSplitHive($from, $to)) {
+            $errorMessage = 'Move would split hive';
         } else {
-            $tile = $this->board->popTile($from);
-            if (!$this->board->hasNeighbour($to)) {
-                $errorMessage = 'Move would split hive';
-            } else {
-                $all = $this->board->getAllPositions();
-                $queue = [array_shift($all)];
-                while ($queue) {
-                    $next = explode(',', array_shift($queue));
-                    foreach (Board::OFFSETS as $pq) {
-                        list($p, $q) = $pq;
-                        $p += $next[0];
-                        $q += $next[1];
-                        if (in_array("$p,$q", $all)) {
-                            $queue[] = "$p,$q";
-                            $all = array_diff($all, ["$p,$q"]);
-                        }
-                    }
+            try {
+                $tile = $this->board->popTile($from);
+                $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
+                if (!$piece->isMoveValid($from, $to)) {
+                    $errorMessage = $piece->getErrorMessage();
                 }
-                if ($all) {
-                    $errorMessage = 'Move would split hive';
-                } else {
-                    try {
-                        $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
-                        if (!$piece->isMoveValid($from, $to)) {
-                            $errorMessage = $piece->getErrorMessage();
-                        }
-                    } catch (Exception $exception) {
-                        $errorMessage = $exception->getMessage();
-                    }
-                }
+            } catch (Exception $exception) {
+                $errorMessage = $exception->getMessage();
             }
         }
 
