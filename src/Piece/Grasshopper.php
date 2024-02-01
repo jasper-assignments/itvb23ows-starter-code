@@ -13,7 +13,7 @@ class Grasshopper extends AbstractPiece
             $this->setErrorMessage('Tile must move');
             return false;
         } elseif (!$board->isPositionEmpty($to)) {
-            $this->setErrorMessage('Board position is not empty');
+            $this->setErrorMessage('Tile not empty');
             return false;
         } elseif (!$this->doesMoveJumpOverAtLeastOneSpace($from, $to)) {
             $this->setErrorMessage('Move does not jump over at least 1 tile');
