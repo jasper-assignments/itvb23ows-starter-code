@@ -86,4 +86,24 @@ class SoldierAntSpec extends TestCase
         // assert
         $this->assertFalse($valid);
     }
+
+    #[Test]
+    public function givenDestinationOnOtherSideOfHiveThatCanBeSlidToThenMoveValidIsTrue()
+    {
+        // arrange
+        $board = new Board([
+            '1,-1' => [[0, 'Q']],
+            '0,0' => [[0, 'S']],
+            '1,0' => [[1, 'Q']],
+        ]);
+        $soldierAnt = new SoldierAnt($board);
+        $from = '0,0';
+        $to = '2,-1';
+
+        // act
+        $valid = $soldierAnt->isMoveValid($from, $to);
+
+        // assert
+        $this->assertTrue($valid);
+    }
 }
