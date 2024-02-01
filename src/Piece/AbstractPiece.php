@@ -21,7 +21,7 @@ abstract class AbstractPiece
     }
 
     protected Board $board;
-    private string $errorMessage;
+    private ?string $errorMessage = null;
 
     public function __construct(Board $board)
     {
@@ -30,7 +30,7 @@ abstract class AbstractPiece
 
     abstract public function isMoveValid(string $from, string $to): bool;
 
-    public function getErrorMessage(): string
+    public function getErrorMessage(): ?string
     {
         return $this->errorMessage;
     }
