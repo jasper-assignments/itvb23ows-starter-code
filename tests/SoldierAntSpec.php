@@ -107,7 +107,7 @@ class SoldierAntSpec extends TestCase
     }
 
     #[Test]
-    public function givenDestinationOnOtherSideOfHiveThatCanBeSlidToThenMoveValidIsTrue()
+    public function givenDestinationThatIsMultipleSlidesAwayThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
