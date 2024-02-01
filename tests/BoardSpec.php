@@ -7,6 +7,21 @@ use PHPUnit\Framework\TestCase;
 class BoardSpec extends TestCase
 {
     #[Test]
+    public function givenGrasshopperStraightDestinationOnXAxisThenMoveValidIsTrue()
+    {
+        // arrange
+        $board = new Board();
+        $from = '0,0';
+        $to = '0,2';
+
+        // act
+        $valid = $board->isGrasshopperMoveValid($from, $to);
+
+        // assert
+        $this->assertTrue($valid);
+    }
+
+    #[Test]
     public function givenGrasshopperStraightDestinationOnYAxisThenMoveValidIsTrue()
     {
         // arrange
