@@ -1,21 +1,23 @@
 <?php
 
 use App\Entity\Board;
+use App\Piece\Grasshopper;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-class BoardSpec extends TestCase
+class GrasshopperSpec extends TestCase
 {
     #[Test]
     public function givenGrasshopperStraightDestinationOnXAxisThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board();
+        $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '0,2';
 
         // act
-        $valid = $board->isGrasshopperMoveValid($from, $to);
+        $valid = $grasshopper->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
@@ -26,11 +28,12 @@ class BoardSpec extends TestCase
     {
         // arrange
         $board = new Board();
+        $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,0';
 
         // act
-        $valid = $board->isGrasshopperMoveValid($from, $to);
+        $valid = $grasshopper->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
@@ -41,11 +44,12 @@ class BoardSpec extends TestCase
     {
         // arrange
         $board = new Board();
+        $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '3,-2';
 
         // act
-        $valid = $board->isGrasshopperMoveValid($from, $to);
+        $valid = $grasshopper->isMoveValid($from, $to);
 
         // assert
         $this->assertFalse($valid);
@@ -56,11 +60,12 @@ class BoardSpec extends TestCase
     {
         // arrange
         $board = new Board();
+        $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,2';
 
         // act
-        $valid = $board->isGrasshopperMoveValid($from, $to);
+        $valid = $grasshopper->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
@@ -71,11 +76,12 @@ class BoardSpec extends TestCase
     {
         // arrange
         $board = new Board();
+        $grasshopper = new Grasshopper($board);
         $from = '0,0';
         $to = '2,-2';
 
         // act
-        $valid = $board->isGrasshopperMoveValid($from, $to);
+        $valid = $grasshopper->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
