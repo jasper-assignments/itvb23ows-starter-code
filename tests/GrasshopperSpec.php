@@ -156,4 +156,22 @@ class GrasshopperSpec extends TestCase
         // assert
         $this->assertFalse($valid);
     }
+
+    #[Test]
+    public function givenPositionNextToCurrentPositionThenMoveValidIsFalse()
+    {
+        // arrange
+        $board = new Board([
+            '0,0' => [[0, 'G']],
+        ]);
+        $grasshopper = new Grasshopper($board);
+        $from = '0,0';
+        $to = '1,1';
+
+        // act
+        $valid = $grasshopper->isMoveValid($from, $to);
+
+        // assert
+        $this->assertFalse($valid);
+    }
 }
