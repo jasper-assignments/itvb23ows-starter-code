@@ -6,10 +6,16 @@ class Grasshopper extends AbstractPiece
 {
     public function isMoveValid(string $from, string $to): bool
     {
+        $board = clone $this->board;
+        $board->popTile($from);
+
         if ($from == $to) {
             $this->setErrorMessage('Tile must move');
             return false;
-        }elseif (!$this->isMoveStraight($from, $to)) {
+        } elseif (!$board->isPositionEmpty($to)) {
+            $this->setErrorMessage('Board position is not empty');
+            return false;
+        } elseif (!$this->isMoveStraight($from, $to)) {
             $this->setErrorMessage('Move is not straight');
             return false;
         } elseif (!$this->areAllPositionsBetweenOccupied($from, $to)) {
