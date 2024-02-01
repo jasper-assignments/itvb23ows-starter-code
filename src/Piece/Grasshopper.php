@@ -7,6 +7,7 @@ class Grasshopper extends AbstractPiece
     public function isMoveValid(string $from, string $to): bool
     {
         if (!$this->isMoveStraight($from, $to)) {
+            $this->setErrorMessage('Move is not straight');
             return false;
         }
 
