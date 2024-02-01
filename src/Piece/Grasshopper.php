@@ -15,6 +15,9 @@ class Grasshopper extends AbstractPiece
         } elseif (!$board->isPositionEmpty($to)) {
             $this->setErrorMessage('Board position is not empty');
             return false;
+        } elseif (!$this->doesMoveJumpOverAtLeastOneSpace($from, $to)) {
+            $this->setErrorMessage('Move does not jump over at least 1 tile');
+            return false;
         } elseif (!$this->isMoveStraight($from, $to)) {
             $this->setErrorMessage('Move is not straight');
             return false;
@@ -83,5 +86,10 @@ class Grasshopper extends AbstractPiece
         }
 
         return $coordinates;
+    }
+
+    private function doesMoveJumpOverAtLeastOneSpace(string $from, string $to): bool
+    {
+        return count($this->getCoordinatesBetween($from, $to)) > 0;
     }
 }
