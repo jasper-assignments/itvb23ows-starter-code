@@ -10,6 +10,7 @@ class Spider extends AbstractPiece
         $board->popTile($from);
 
         if (!$board->isPositionEmpty($to)) {
+            $this->setErrorMessage('Tile not empty');
             return false;
         }
         return true;
