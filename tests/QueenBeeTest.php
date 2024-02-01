@@ -14,9 +14,11 @@ class QueenBeeTest extends TestCase
             '1,0' => [[1, 'Q']],
         ]);
         $queenBee = new QueenBee($board);
+        $from = '0,0';
+        $to = '0,1';
 
         // act
-        $valid = $queenBee->isMoveValid('0,0', '0,1');
+        $valid = $queenBee->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
@@ -34,9 +36,11 @@ class QueenBeeTest extends TestCase
             '1,1' => [[1, 'B']],
         ]);
         $queenBee = new QueenBee($board);
+        $from = '1,0';
+        $to = '0,0';
 
         // act
-        $valid = $queenBee->isMoveValid('1,0', '0,0');
+        $valid = $queenBee->isMoveValid($from, $to);
 
         // assert
         $this->assertFalse($valid);
@@ -54,9 +58,11 @@ class QueenBeeTest extends TestCase
             '1,1' => [[1, 'B']],
         ]);
         $queenBee = new QueenBee($board);
+        $from = '1,0';
+        $to = '0,0';
 
         // act
-        $valid = $queenBee->isMoveValid('1,0', '0,0');
+        $valid = $queenBee->isMoveValid($from, $to);
 
         // assert
         $this->assertTrue($valid);
