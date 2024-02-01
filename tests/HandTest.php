@@ -12,9 +12,10 @@ class HandTest extends TestCase
 
         // act
         $hand->removePiece('Q');
+        $availablePieces = $hand->getAvailablePieces();
 
         // assert
-        $this->assertArrayNotHasKey('Q', $hand->getAvailablePieces());
+        $this->assertArrayNotHasKey('Q', $availablePieces);
     }
 
     public function testAvailablePiecesContainsPieceWithWithMoreThanZeroAvailable()
@@ -24,8 +25,9 @@ class HandTest extends TestCase
 
         // act
         $hand->removePiece('B');
+        $availablePieces = $hand->getAvailablePieces();
 
         // assert
-        $this->assertArrayHasKey('B', $hand->getAvailablePieces());
+        $this->assertArrayHasKey('B', $availablePieces);
     }
 }
