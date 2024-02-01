@@ -140,6 +140,14 @@ class Board
 
     public function isGrasshopperMoveValid(string $from, string $to): bool
     {
-        return true;
+        [$fromX, $fromY] = explode(',', $from);
+        [$toX, $toY] = explode(',', $to);
+
+        // Check if line is straight on Y axis
+        if ($fromY == $toY) {
+            return true;
+        }
+
+        return false;
     }
 }
