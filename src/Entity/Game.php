@@ -206,11 +206,7 @@ class Game
             $errorMessage = 'Move would split hive';
         } else {
             $tile = $this->board->getCurrentTileOnPosition($from);
-            if ($from == $to) {
-                $errorMessage = 'Tile must move';
-            } elseif (!$this->board->isPositionEmpty($to) && $tile[1] != 'B') {
-                $errorMessage = 'Tile not empty';
-            } elseif ($tile[1] == 'Q' || $tile[1] == 'B' || $tile[1] == 'G') {
+            if ($tile[1] == 'Q' || $tile[1] == 'B' || $tile[1] == 'G') {
                 try {
                     $piece = AbstractPiece::createFromLetter($tile[1], $this->board);
                     if (!$piece->isMoveValid($from, $to)) {
@@ -218,6 +214,12 @@ class Game
                     }
                 } catch (Exception $exception) {
                     $errorMessage = $exception->getMessage();
+                }
+            } else {
+                if ($from == $to) {
+                    $errorMessage = 'Tile must move';
+                } elseif (!$this->board->isPositionEmpty($to) && $tile[1] != 'B') {
+                    $errorMessage = 'Tile not empty';
                 }
             }
         }
