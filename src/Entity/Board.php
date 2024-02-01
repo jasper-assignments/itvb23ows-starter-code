@@ -148,8 +148,8 @@ class Board
             return true;
         }
 
-        // Check if line is straight on upward diagonal
-        if ($fromX - $toX == $fromY - $toY) {
+        // Check if line is straight on upward and downward diagonal
+        if (abs($fromX - $toX) == abs($fromY - $toY)) {
             return true;
         }
 
