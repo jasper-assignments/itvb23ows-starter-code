@@ -6,7 +6,10 @@ class Grasshopper extends AbstractPiece
 {
     public function isMoveValid(string $from, string $to): bool
     {
-        if (!$this->isMoveStraight($from, $to)) {
+        if ($from == $to) {
+            $this->setErrorMessage('Tile must move');
+            return false;
+        }elseif (!$this->isMoveStraight($from, $to)) {
             $this->setErrorMessage('Move is not straight');
             return false;
         } elseif (!$this->areAllPositionsBetweenOccupied($from, $to)) {
