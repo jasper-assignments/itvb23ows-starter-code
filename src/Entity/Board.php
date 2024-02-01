@@ -115,16 +115,7 @@ class Board
         }
 
         // Find the common neighbours between the to position and from position
-        $b = explode(',', $to);
-        $common = [];
-        foreach (self::OFFSETS as $pq) {
-            $p = $b[0] + $pq[0];
-            $q = $b[1] + $pq[1];
-            $neighbour = "$p,$q";
-            if (!$this->isPositionEmpty($neighbour) && $this->isNeighbour($from, $neighbour)) {
-                $common[] = $neighbour;
-            }
-        }
+        $common = array_filter($this->getEmptyNeighbourPositions($to), fn($pos) => $this->isNeighbour($from, $pos));
 
         if (
             !isset($this->tiles[$common[0]]) &&
@@ -141,6 +132,21 @@ class Board
                 $this->len($this->tiles[$from] ?? []),
                 $this->len($this->tiles[$to] ?? [])
             );
+    }
+
+    public function getEmptyNeighbourPositions(string $pos): array
+    {
+        $b = explode(',', $pos);
+        $neighbours = [];
+        foreach (self::OFFSETS as $pq) {
+            $p = $b[0] + $pq[0];
+            $q = $b[1] + $pq[1];
+            $neighbour = "$p,$q";
+            if (!$this->isPositionEmpty($neighbour)) {
+                $neighbours[] = $neighbour;
+            }
+        }
+        return $neighbours;
     }
 
     public function willMoveSplitHive(string $from, string $to): bool
