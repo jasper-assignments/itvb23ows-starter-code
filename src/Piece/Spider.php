@@ -25,9 +25,10 @@ class Spider extends AbstractPiece
         Board $board,
         string $current,
         string $destination,
-        array $visited = []
+        array $visited = [],
+        int $i = 0
     ): bool {
-        if ($current == $destination) {
+        if ($current == $destination && $i <= 3) {
             return true;
         }
 
@@ -39,7 +40,7 @@ class Spider extends AbstractPiece
 
             if ($board->slide($current, $neighbor)) {
                 $visited[] = $current;
-                if ($this->canDestinationBeReachedBySliding($board, $neighbor, $destination, $visited)) {
+                if ($this->canDestinationBeReachedBySliding($board, $neighbor, $destination, $visited, $i + 1)) {
                     return true;
                 }
             }
