@@ -34,7 +34,7 @@ class DefaultController
         /** @var string $to */
         $to = $_POST['to'];
 
-        $game = Game::createFromState($this->database, $_SESSION['game_state']);
+        $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
         try {
             $game->play($piece, $to);
         } catch (InvalidMoveException $exception) {
@@ -56,7 +56,7 @@ class DefaultController
 
         unset($_SESSION['error']);
 
-        $game = Game::createFromState($this->database, $_SESSION['game_state']);
+        $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
         try {
             $game->move($from, $to);
         } catch (InvalidMoveException $exception) {
@@ -71,7 +71,7 @@ class DefaultController
     {
         session_start();
 
-        $game = Game::createFromState($this->database, $_SESSION['game_state']);
+        $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
         try {
             $game->pass();
         } catch (InvalidMoveException $exception) {
@@ -96,7 +96,7 @@ class DefaultController
     {
         session_start();
 
-        $game = Game::createFromState($this->database, $_SESSION['game_state']);
+        $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
         $game->undo();
         $_SESSION['game_state'] = $game->getState();
 

@@ -16,6 +16,7 @@ class Game
     /** @var Hand[] $hands */
     private array $hands;
     private int $currentPlayer;
+    private int $moveNumber;
 
     public function __construct(
         Database $database,
@@ -23,7 +24,8 @@ class Game
         int $id = null,
         Board $board = null,
         array $hands = null,
-        int $currentPlayer = 0
+        int $currentPlayer = 0,
+        int $moveNumber = 0
     )
     {
         $this->database = $database;
@@ -33,6 +35,7 @@ class Game
         $this->board = $board ?? new Board();
         $this->hands = $hands ?? [0 => new Hand(), 1 => new Hand()];
         $this->currentPlayer = $currentPlayer;
+        $this->moveNumber = $moveNumber;
     }
 
     public static function createFromState(Database $database, Ai $ai, string $rawState): Game
@@ -44,7 +47,8 @@ class Game
             $state['id'],
             $state['board'],
             $state['hands'],
-            $state['currentPlayer']
+            $state['currentPlayer'],
+            $state['moveNumber']
         );
     }
 
@@ -55,6 +59,7 @@ class Game
             'board' => $this->board,
             'hands' => $this->hands,
             'currentPlayer' => $this->currentPlayer,
+            'moveNumber' => $this->moveNumber,
         ]);
     }
 
@@ -88,6 +93,11 @@ class Game
     public function getCurrentPlayer(): int
     {
         return $this->currentPlayer;
+    }
+
+    public function getMoveNumber(): int
+    {
+        return $this->moveNumber;
     }
 
     private function switchCurrentPlayer(): void
@@ -144,7 +154,8 @@ class Game
         $_SESSION['last_move'] = $this->database->createMove(
             $this,
             'move',
-            $from, $to,
+            $from,
+            $to,
             $_SESSION['last_move']
         );
     }

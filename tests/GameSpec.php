@@ -5,11 +5,14 @@ use App\Entity\Board;
 use App\Entity\Database;
 use App\Entity\Game;
 use App\Entity\Hand;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class GameSpec extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     #[Test]
     public function givenNoValidPlayAndNoValidMoveThenCanPassIsTrue()
     {
@@ -218,5 +221,33 @@ class GameSpec extends TestCase
 
         // assert
         $this->assertSame(-1, $winner);
+    }
+
+    #[Test]
+    public function whenPiecePlayedThenMoveNumberShouldIncreaseByOne()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $databaseMock->allows('createMove')->andReturn(1);
+        $aiMock = Mockery::mock(Ai::class);
+        $game = new Game(
+            $databaseMock,
+            $aiMock,
+            -1,
+            new Board(),
+            [
+                0 => new Hand(),
+                1 => new Hand(),
+            ],
+            0,
+            0
+        );
+
+        // act
+        $game->play('Q', '0,0');
+        $moveNumber = $game->getMoveNumber();
+
+        // assert
+        $this->assertSame(1, $moveNumber);
     }
 }
