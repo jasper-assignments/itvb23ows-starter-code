@@ -325,6 +325,8 @@ class Game
         $suggestion = $this->ai->getSuggestion($this->moveNumber, $this->hands, $this->board);
         if ($suggestion[0] == 'play') {
             $this->play($suggestion[1], $suggestion[2], true);
+        } elseif ($suggestion[0] == 'move') {
+            $this->move($suggestion[1], $suggestion[2], true);
         }
     }
 }
