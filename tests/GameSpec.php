@@ -250,4 +250,39 @@ class GameSpec extends TestCase
         // assert
         $this->assertSame(1, $moveNumber);
     }
+
+    #[Test]
+    public function whenPieceMovedThenMoveNumberShouldIncreaseByOne()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $databaseMock->allows('createMove')->andReturn(1);
+        $aiMock = Mockery::mock(Ai::class);
+        $game = new Game(
+            $databaseMock,
+            $aiMock,
+            -1,
+            new Board([
+                '0,0' => [[0, 'Q']],
+                '1,0' => [[1, 'Q']],
+            ]),
+            [
+                0 => new Hand([
+                    'Q' => 0,
+                ]),
+                1 => new Hand([
+                    'Q' => 0,
+                ]),
+            ],
+            0,
+            0
+        );
+
+        // act
+        $game->move('0,0', '0,1');
+        $moveNumber = $game->getMoveNumber();
+
+        // assert
+        $this->assertSame(1, $moveNumber);
+    }
 }
