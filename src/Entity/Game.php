@@ -173,9 +173,10 @@ class Game
     /**
      * @throws InvalidMoveException
      */
-    public function pass(): void
+    public function pass(bool $force = false): void
     {
-        if (!$this->canPass()) {
+        // if pass is forced (i.e. it's played by AI) then skip validation
+        if (!$force && !$this->canPass()) {
             throw new InvalidMoveException('Player cannot pass right now');
         }
 
