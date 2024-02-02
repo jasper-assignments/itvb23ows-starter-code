@@ -242,6 +242,10 @@ class Game
 
     public function canPass(): bool
     {
+        $hand = $this->hands[$this->currentPlayer];
+        if (count($hand->getAvailablePieces()) > 0) {
+            return false;
+        }
         return true;
     }
 }
