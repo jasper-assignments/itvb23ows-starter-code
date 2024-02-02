@@ -14,21 +14,21 @@ class Spider extends AbstractPiece
         if (!$board->isPositionEmpty($to)) {
             $this->setErrorMessage('Tile not empty');
             return false;
-        } elseif (!$this->canDestinationBeReachedBySliding($board, $from, $to)) {
+        } elseif (!$this->canDestinationBeReachedBySlidingThreeTimes($board, $from, $to)) {
             $this->setErrorMessage('Tile must slide');
             return false;
         }
         return true;
     }
 
-    public function canDestinationBeReachedBySliding(
+    public function canDestinationBeReachedBySlidingThreeTimes(
         Board $board,
         string $current,
         string $destination,
         array $visited = [],
         int $i = 0
     ): bool {
-        if ($current == $destination && $i <= 3) {
+        if ($current == $destination && $i == 3) {
             return true;
         }
 
@@ -40,7 +40,7 @@ class Spider extends AbstractPiece
 
             if ($board->slide($current, $neighbor)) {
                 $visited[] = $current;
-                if ($this->canDestinationBeReachedBySliding($board, $neighbor, $destination, $visited, $i + 1)) {
+                if ($this->canDestinationBeReachedBySlidingThreeTimes($board, $neighbor, $destination, $visited, $i + 1)) {
                     return true;
                 }
             }
