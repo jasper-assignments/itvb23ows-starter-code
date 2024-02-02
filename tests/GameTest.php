@@ -121,6 +121,7 @@ class GameTest extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $databaseMock->allows('createMove')->andReturn(1);
         $aiMock = Mockery::mock(Ai::class);
         $game = new Game(
             $databaseMock,
@@ -149,9 +150,6 @@ class GameTest extends TestCase
             ],
             0
         );
-        $databaseMock->allows()
-            ->createMove($game, 'move', '0,-1', '0,2', null)
-            ->andReturn(1);
 
         // act
         $game->move('0,-1', '0,2');
