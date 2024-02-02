@@ -1,16 +1,18 @@
 <?php
 
-    use App\Entity\Database;
+use App\Entity\Ai;
+use App\Entity\Database;
     use App\Entity\Game;
+use GuzzleHttp\Client;
 
-    session_start();
+session_start();
 
     if (!isset($_SESSION['game_state'])) {
         header('Location: restart');
         exit(0);
     }
 
-    $game = Game::createFromState(new Database(), $_SESSION['game_state']);
+    $game = Game::createFromState(new Database(), new Ai(new Client()), $_SESSION['game_state']);
 
     $board = $game->getBoard();
     $hands = $game->getHands();
