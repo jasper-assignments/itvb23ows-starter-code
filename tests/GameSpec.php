@@ -330,6 +330,6 @@ class GameSpec extends TestCase
         $game->makeAiMove();
 
         // assert
-        $aiSpy->shouldHaveReceived()->getSuggestion($moveNumber, $hands, $board);
+        $aiSpy->shouldHaveReceived('getSuggestion', [$moveNumber, $hands, $board]);
     }
 }

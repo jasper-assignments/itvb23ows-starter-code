@@ -91,15 +91,18 @@ class AiSpec extends TestCase
         $ai->getSuggestion($moveNumber, $hands, $board);
 
         // assert
-        $guzzleClientSpy->shouldHaveReceived()->post('', [
-            'json' => [
-                'move_number' => $moveNumber,
-                'hand' => [
-                    $hands[0]->getPieces(),
-                    $hands[1]->getPieces(),
-                ],
-                'board' => $board->getTiles(),
-            ]
+        $guzzleClientSpy->shouldHaveReceived('post', [
+            '',
+            [
+                'json' => [
+                    'move_number' => $moveNumber,
+                    'hand' => [
+                        $hands[0]->getPieces(),
+                        $hands[1]->getPieces(),
+                    ],
+                    'board' => $board->getTiles(),
+                ]
+            ],
         ]);
     }
 
