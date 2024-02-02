@@ -316,5 +316,6 @@ class Game
 
     public function makeAiMove(): void
     {
+        $suggestion = $this->ai->getSuggestion($this->moveNumber, $this->hands, $this->board);
     }
 }
