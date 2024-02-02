@@ -179,4 +179,26 @@ class Board
         }
         return false;
     }
+
+    public function getPositionOfTile(int $player, string $piece): ?string
+    {
+        $positions = $this->getAllOccupiedPositions();
+        foreach ($positions as $pos) {
+            $tile = $this->getCurrentTileOnPosition($pos);
+            if ($tile[0] == $player && $tile[1] == $piece) {
+                return $pos;
+            }
+        }
+        return null;
+    }
+
+    public function isPositionSurrounded(string $pos): bool
+    {
+        foreach ($this->getNeighbourPositions($pos) as $neighbour) {
+            if ($this->isPositionEmpty($neighbour)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
