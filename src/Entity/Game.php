@@ -17,6 +17,7 @@ class Game
     private array $hands;
     private int $currentPlayer;
     private int $moveNumber;
+    private ?int $lastMoveId;
 
     public function __construct(
         Database $database,
@@ -25,7 +26,8 @@ class Game
         Board $board = null,
         array $hands = null,
         int $currentPlayer = 0,
-        int $moveNumber = 0
+        int $moveNumber = 0,
+        int $lastMoveId = null
     )
     {
         $this->database = $database;
@@ -36,6 +38,7 @@ class Game
         $this->hands = $hands ?? [0 => new Hand(), 1 => new Hand()];
         $this->currentPlayer = $currentPlayer;
         $this->moveNumber = $moveNumber;
+        $this->lastMoveId = $lastMoveId;
     }
 
     public static function createFromState(Database $database, Ai $ai, string $rawState): Game
@@ -48,7 +51,8 @@ class Game
             $state['board'],
             $state['hands'],
             $state['currentPlayer'],
-            $state['moveNumber']
+            $state['moveNumber'],
+            $state['lastMoveId']
         );
     }
 
@@ -60,6 +64,7 @@ class Game
             'hands' => $this->hands,
             'currentPlayer' => $this->currentPlayer,
             'moveNumber' => $this->moveNumber,
+            'lastMoveId' => $this->lastMoveId,
         ]);
     }
 
@@ -71,6 +76,7 @@ class Game
         $this->hands = $state['hands'];
         $this->currentPlayer = $state['currentPlayer'];
         $this->moveNumber = $state['moveNumber'];
+        $this->lastMoveId = $state['lastMoveId'];
     }
 
     public function getId(): int
@@ -99,6 +105,11 @@ class Game
     public function getMoveNumber(): int
     {
         return $this->moveNumber;
+    }
+
+    public function getLastMoveId(): ?int
+    {
+        return $this->lastMoveId;
     }
 
     private function switchCurrentPlayer(): void
@@ -133,12 +144,12 @@ class Game
         $this->board->setPosition($to, $this->currentPlayer, $piece);
         $hand->removePiece($piece);
         $this->switchCurrentPlayer();
-        $_SESSION['last_move'] = $this->database->createMove(
+        $this->lastMoveId = $this->database->createMove(
             $this->id,
             'play',
             $piece,
             $to,
-            $_SESSION['last_move'],
+            $this->lastMoveId,
             $this->getState()
         );
         $this->moveNumber += 1;
@@ -160,12 +171,12 @@ class Game
         $tile = $this->board->popTile($from);
         $this->board->pushTile($to, $tile);
         $this->switchCurrentPlayer();
-        $_SESSION['last_move'] = $this->database->createMove(
+        $this->lastMoveId = $this->database->createMove(
             $this->id,
             'move',
             $from,
             $to,
-            $_SESSION['last_move'],
+            $this->lastMoveId,
             $this->getState()
         );
         $this->moveNumber += 1;
@@ -181,9 +192,9 @@ class Game
             throw new InvalidMoveException('Player cannot pass right now');
         }
 
-        $_SESSION['last_move'] = $this->database->createPassMove(
+        $this->lastMoveId = $this->database->createPassMove(
             $this->id,
-            $_SESSION['last_move'],
+            $this->lastMoveId,
             $this->getState()
         );
         $this->switchCurrentPlayer();
@@ -194,11 +205,11 @@ class Game
      */
     public function undo(): void
     {
-        $result = $this->database->findMoveById($_SESSION['last_move']);
-        $_SESSION['last_move'] = $result[5];
         if (!$this->canUndo()) {
             throw new InvalidMoveException('Player cannot undo right now');
         }
+        $result = $this->database->findMoveById($this->lastMoveId);
+        $this->lastMoveId = $result[5];
         $this->setState($result[6]);
     }
 
