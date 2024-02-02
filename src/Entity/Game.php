@@ -301,6 +301,11 @@ class Game
         return true;
     }
 
+    public function canUndo(): bool
+    {
+        return true;
+    }
+
     public function getWinner(): ?int
     {
         $queenPosBlack = $this->board->getPositionOfTile(1, 'Q');

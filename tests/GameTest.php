@@ -198,4 +198,19 @@ class GameTest extends TestCase
         // act
         $game->play('S', '0,-1');
     }
+
+    public function testUndoCannotBeDoneWithNoMoves()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $databaseMock->allows('createGame')->andReturns(1);
+        $aiMock = Mockery::mock(Ai::class);
+        $game = new Game($databaseMock, $aiMock);
+
+        // act
+        $canUndo = $game->canUndo();
+
+        // assert
+        $this->assertFalse($canUndo);
+    }
 }
