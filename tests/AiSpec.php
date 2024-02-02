@@ -78,7 +78,7 @@ class AiSpec extends TestCase
     {
         // arrange
         $guzzleClientSpy = Mockery::spy(Client::class);
-        $guzzleClientSpy->allows('post')->andReturn(new Response(body: '["play", "B", "0,0"]'));
+        $guzzleClientSpy->allows('post')->andReturns(new Response(body: '["play", "B", "0,0"]'));
         $ai = new Ai($guzzleClientSpy);
         $moveNumber = 1;
         $hands = [
@@ -111,7 +111,7 @@ class AiSpec extends TestCase
     {
         // arrange
         $guzzleClientMock = Mockery::mock(Client::class);
-        $guzzleClientMock->allows('post')->andReturn(new Response(body: '["play", "B", "0,0"]'));
+        $guzzleClientMock->allows('post')->andReturns(new Response(body: '["play", "B", "0,0"]'));
         $ai = new Ai($guzzleClientMock);
         $moveNumber = 1;
         $hands = [

@@ -228,7 +228,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $databaseMock->allows('createMove')->andReturn(1);
+        $databaseMock->allows('createMove')->andReturns(1);
         $aiMock = Mockery::mock(Ai::class);
         $game = new Game(
             $databaseMock,
@@ -256,7 +256,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $databaseMock->allows('createMove')->andReturn(1);
+        $databaseMock->allows('createMove')->andReturns(1);
         $aiMock = Mockery::mock(Ai::class);
         $game = new Game(
             $databaseMock,
@@ -338,9 +338,9 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $databaseMock->allows('createMove')->andReturn(1);
+        $databaseMock->allows('createMove')->andReturns(1);
         $aiMock = Mockery::mock(Ai::class);
-        $aiMock->allows('getSuggestion')->andReturn(['play', 'Q', '0,0']);
+        $aiMock->allows('getSuggestion')->andReturns(['play', 'Q', '0,0']);
         $board = new Board();
         $hands = [
             0 => new Hand(),
@@ -362,9 +362,9 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $databaseMock->allows('createMove')->andReturn(1);
+        $databaseMock->allows('createMove')->andReturns(1);
         $aiMock = Mockery::mock(Ai::class);
-        $aiMock->allows('getSuggestion')->andReturn(['move', '0,0', '0,1']);
+        $aiMock->allows('getSuggestion')->andReturns(['move', '0,0', '0,1']);
         $board = new Board([
             '0,0' => [[0, 'Q']],
             '1,0' => [[1, 'Q']],
@@ -401,9 +401,9 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $databaseMock->allows('createPassMove')->andReturn(1);
+        $databaseMock->allows('createPassMove')->andReturns(1);
         $aiMock = Mockery::mock(Ai::class);
-        $aiMock->allows('getSuggestion')->andReturn(['pass', null, null]);
+        $aiMock->allows('getSuggestion')->andReturns(['pass', null, null]);
         $board = new Board([
             '0,0' => [[0, 'Q']],
             '1,0' => [[1, 'Q']],
