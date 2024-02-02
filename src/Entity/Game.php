@@ -239,4 +239,9 @@ class Game
     {
         return array_filter($this->getToPositions(), fn($pos) => $this->isPlayValid($pos)[0]);
     }
+
+    public function canPass(): bool
+    {
+        return true;
+    }
 }
