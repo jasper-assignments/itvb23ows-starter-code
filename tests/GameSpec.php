@@ -179,4 +179,35 @@ class GameSpec extends TestCase
         // assert
         $this->assertSame(0, $winner);
     }
+
+    #[Test]
+    public function givenBothQueensSurroundedThenWinnerIsTie()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board([
+            '0,0' => [[0, 'Q']],
+            '1,0' => [[1, 'Q']],
+            '0,-1' => [[0, 'A']],
+            '1,-1' => [[1, 'A']],
+            '2,-1' => [[0, 'S']],
+            '2,0' => [[1, 'S']],
+            '1,1' => [[0, 'G']],
+            '0,1' => [[1, 'G']],
+            '-1,1' => [[0, 'B']],
+            '-1,0' => [[1, 'B']],
+        ]);
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 1;
+        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+
+        // act
+        $winner = $game->getWinner();
+
+        // assert
+        $this->assertSame(-1, $winner);
+    }
 }
