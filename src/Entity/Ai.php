@@ -30,4 +30,14 @@ class Ai
             'board' => $board->getTiles(),
         ];
     }
+
+    /**
+     * @param int $moveNumber
+     * @param array{Hand, Hand} $hands
+     * @param Board $board
+     */
+    public function getSuggestion(int $moveNumber, array $hands, Board $board)
+    {
+        return null;
+    }
 }

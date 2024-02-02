@@ -4,11 +4,15 @@ use App\Entity\Ai;
 use App\Entity\Board;
 use App\Entity\Hand;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class AiSpec extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     #[Test]
     public function givenIntMoveNumberThenBuildBodyAddsCorrectlyToBody()
     {
@@ -67,5 +71,35 @@ class AiSpec extends TestCase
 
         // assert
         $this->assertSame($board->getTiles(), $body['board']);
+    }
+
+    #[Test]
+    public function givenDataThenEnsurePostGetsCalledWithRightParameters()
+    {
+        // arrange
+        $guzzleClientSpy = Mockery::spy(Client::class);
+        $guzzleClientSpy->allows('post')->andReturn(new Response());
+        $ai = new Ai($guzzleClientSpy);
+        $moveNumber = 1;
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $board = new Board();
+
+        // act
+        $ai->getSuggestion($moveNumber, $hands, $board);
+
+        // assert
+        $guzzleClientSpy->shouldHaveReceived()->post('', [
+            'json' => [
+                'move_number' => $moveNumber,
+                'hand' => [
+                    $hands[0]->getPieces(),
+                    $hands[1]->getPieces(),
+                ],
+                'board' => $board->getTiles(),
+            ]
+        ]);
     }
 }
