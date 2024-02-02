@@ -346,8 +346,8 @@ class GameSpec extends TestCase
             0 => new Hand(),
             1 => new Hand(),
         ];
-        $currentPlayer = 1;
-        $moveNumber = 3;
+        $currentPlayer = 0;
+        $moveNumber = 0;
         $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer, $moveNumber);
 
         // act
