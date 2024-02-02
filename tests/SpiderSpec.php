@@ -68,6 +68,24 @@ class SpiderSpec extends TestCase
     }
 
     #[Test]
+    public function givenCurrentPositionAsDestinationThenMoveValidIsFalse()
+    {
+        // arrange
+        $board = new Board([
+            '0,0' => [[0, 'S']],
+        ]);
+        $spider = new Spider($board);
+        $from = '0,0';
+        $to = '0,0';
+
+        // act
+        $valid = $spider->isMoveValid($from, $to);
+
+        // assert
+        $this->assertFalse($valid);
+    }
+
+    #[Test]
     public function givenOccupiedPositionAsDestinationThenMoveValidIsFalse()
     {
         // arrange
