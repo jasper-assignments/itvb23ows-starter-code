@@ -332,4 +332,28 @@ class GameSpec extends TestCase
         // assert
         $aiSpy->shouldHaveReceived('getSuggestion', [$moveNumber, $hands, $board]);
     }
+
+    #[Test]
+    public function whenMakingAiMoveWithPlayAsSuggestionThenCreateMoveShouldGetCalledWithSuggestion()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $databaseMock->allows('createMove')->andReturn(1);
+        $aiMock = Mockery::mock(Ai::class);
+        $aiMock->allows('getSuggestion')->andReturn(['play', 'Q', '0,0']);
+        $board = new Board();
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 1;
+        $moveNumber = 3;
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer, $moveNumber);
+
+        // act
+        $game->makeAiMove();
+
+        // assert
+        $databaseMock->shouldHaveReceived('createMove', [-1, 'play', 'Q', '0,0', Mockery::any(), Mockery::any()]);
+    }
 }
