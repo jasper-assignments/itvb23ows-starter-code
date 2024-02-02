@@ -56,7 +56,13 @@ class Database
         return $stmt->get_result()->fetch_all();
     }
 
-    public function createMove(int $gameId, string $type, string $moveFrom, string $moveTo, ?int $lastMoveId, string $state): int
+    public function createMove(
+        int $gameId, string $type,
+        string $moveFrom,
+        string $moveTo,
+        ?int $lastMoveId,
+        string $state
+    ): int
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
