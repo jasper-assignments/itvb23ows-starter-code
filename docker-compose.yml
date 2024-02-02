@@ -25,3 +25,11 @@ services:
     ports:
       - 8000:8000
     restart: unless-stopped
+
+  ai:
+    build:
+      context: .
+      dockerfile: ai.dockerfile
+    ports:
+      - 5000:5000
+    restart: unless-stopped
