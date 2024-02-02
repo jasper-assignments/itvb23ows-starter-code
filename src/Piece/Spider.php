@@ -35,7 +35,10 @@ class Spider extends AbstractPiece
             return true;
         }
 
-        $emptyNeighbours = $board->getNeighbourPositions($current, fn($neighbour) => $board->isPositionEmpty($neighbour));
+        $emptyNeighbours = $board->getNeighbourPositions(
+            $current,
+            fn($neighbour) => $board->isPositionEmpty($neighbour)
+        );
         foreach ($emptyNeighbours as $neighbor) {
             if (in_array($neighbor, $visited)) {
                 continue;
@@ -43,7 +46,15 @@ class Spider extends AbstractPiece
 
             if ($board->slide($current, $neighbor)) {
                 $visited[] = $current;
-                if ($this->canDestinationBeReachedBySlidingThreeTimes($board, $neighbor, $destination, $visited, $i + 1)) {
+                if (
+                    $this->canDestinationBeReachedBySlidingThreeTimes(
+                        $board,
+                        $neighbor,
+                        $destination,
+                        $visited,
+                        $i + 1
+                    )
+                ) {
                     return true;
                 }
             }

@@ -34,7 +34,10 @@ class SoldierAnt extends AbstractPiece
             return true;
         }
 
-        $emptyNeighbours = $board->getNeighbourPositions($current, fn($neighbour) => $board->isPositionEmpty($neighbour));
+        $emptyNeighbours = $board->getNeighbourPositions(
+            $current,
+            fn($neighbour) => $board->isPositionEmpty($neighbour)
+        );
         foreach ($emptyNeighbours as $neighbor) {
             if (in_array($neighbor, $visited)) {
                 continue;
