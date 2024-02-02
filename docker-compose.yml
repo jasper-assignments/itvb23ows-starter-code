@@ -22,6 +22,7 @@ services:
       - PHP_MYSQL_HOSTNAME=${PHP_MYSQL_HOSTNAME}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - AI_BASE_URI=${AI_BASE_URI}
     ports:
       - 8000:8000
     restart: unless-stopped
