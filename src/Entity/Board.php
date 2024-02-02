@@ -137,7 +137,7 @@ class Board
             );
     }
 
-    public function getNeighbourPositions(string $pos, callable $filterFunction): array
+    public function getNeighbourPositions(string $pos, callable $filterFunction = null): array
     {
         $b = explode(',', $pos);
         $neighbours = [];
@@ -145,7 +145,7 @@ class Board
             $p = $b[0] + $pq[0];
             $q = $b[1] + $pq[1];
             $neighbour = "$p,$q";
-            if ($filterFunction($neighbour)) {
+            if (!isset($filterFunction) || $filterFunction($neighbour)) {
                 $neighbours[] = $neighbour;
             }
         }
