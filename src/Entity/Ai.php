@@ -13,10 +13,19 @@ class Ai
         $this->client = $client;
     }
 
-    public function buildBody(int $moveNumber): array
+    /**
+     * @param int $moveNumber
+     * @param array{Hand, Hand} $hands
+     * @return array
+     */
+    public function buildBody(int $moveNumber, array $hands): array
     {
         return [
             'move_number' => $moveNumber,
+            'hand' => [
+                $hands[0]->getPieces(),
+                $hands[1]->getPieces(),
+            ],
         ];
     }
 }

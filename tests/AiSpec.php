@@ -15,9 +15,13 @@ class AiSpec extends TestCase
         $guzzleClientMock = Mockery::mock(Client::class);
         $ai = new Ai($guzzleClientMock);
         $moveNumber = 1;
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
 
         // act
-        $body = $ai->buildBody($moveNumber);
+        $body = $ai->buildBody($moveNumber, $hands);
 
         // assert
         $this->assertSame(1, $body['move_number']);
