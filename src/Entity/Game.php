@@ -9,6 +9,7 @@ use Exception;
 class Game
 {
     private Database $database;
+    private Ai $ai;
 
     private int $id;
     private Board $board;
@@ -18,6 +19,7 @@ class Game
 
     public function __construct(
         Database $database,
+        Ai $ai,
         int $id = null,
         Board $board = null,
         array $hands = null,
@@ -25,6 +27,7 @@ class Game
     )
     {
         $this->database = $database;
+        $this->ai = $ai;
 
         $this->id = $id ?? $this->database->createGame();
         $this->board = $board ?? new Board();
@@ -32,11 +35,12 @@ class Game
         $this->currentPlayer = $currentPlayer;
     }
 
-    public static function createFromState(Database $database, string $rawState): Game
+    public static function createFromState(Database $database, Ai $ai, string $rawState): Game
     {
         $state = unserialize($rawState);
         return new Game(
             $database,
+            $ai,
             $state['id'],
             $state['board'],
             $state['hands'],

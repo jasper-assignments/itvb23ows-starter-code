@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ai;
 use App\Entity\Database;
 use App\Entity\Game;
 use App\Exception\InvalidMoveException;
@@ -11,10 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController
 {
     private Database $database;
+    private Ai $ai;
 
-    public function __construct(Database $database)
+    public function __construct(Database $database, Ai $ai)
     {
         $this->database = $database;
+        $this->ai = $ai;
     }
 
     public function index(): Response
@@ -83,7 +86,7 @@ class DefaultController
     {
         session_start();
 
-        $game = new Game($this->database);
+        $game = new Game($this->database, $this->ai);
         $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse('/');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Ai;
 use App\Entity\Board;
 use App\Entity\Database;
 use App\Entity\Game;
@@ -86,7 +87,8 @@ class GameTest extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $aiMock = Mockery::mock(Ai::class);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $playPositions = $game->getValidPlayPositions();
@@ -105,7 +107,8 @@ class GameTest extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $aiMock = Mockery::mock(Ai::class);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $playPositions = $game->getValidPlayPositions();
@@ -118,8 +121,10 @@ class GameTest extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $game = new Game(
             $databaseMock,
+            $aiMock,
             -1,
             new Board([
                 '0,0' => [[1, 'Q']],
@@ -160,6 +165,7 @@ class GameTest extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '1,-1' => [[0, 'S']],
             '-1,0' => [[0, 'B']],
@@ -184,7 +190,7 @@ class GameTest extends TestCase
                 'G' => 3,
             ]),
         ];
-        $game = new Game($databaseMock, -1, $board, $hands, 0);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, 0);
 
         // expect
         // This test follows Arrange, Expect, Act rather than the usual Arrange, Act, Assert

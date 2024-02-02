@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use App\Entity\Ai;
 use App\Entity\Database;
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 
 function render_template(string $name): Response
@@ -24,7 +26,8 @@ if (!isset($routes[$path])) {
     try {
         [$controller, $method] = $routes[$path];
         $database = new Database();
-        $response = call_user_func([new $controller($database), $method]);
+        $ai = new Ai(new Client(['base_uri' => $_ENV['AI_BASE_URI']]));
+        $response = call_user_func([new $controller(database: $database, ai: $ai), $method]);
     } catch (Exception $exception) {
         $response = new Response('An error occurred', 500);
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Entity\Ai;
 use App\Entity\Board;
 use App\Entity\Database;
 use App\Entity\Game;
@@ -14,13 +15,14 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board();
         $hands = [
             0 => new Hand([]),
             1 => new Hand([]),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $canPass = $game->canPass();
@@ -34,13 +36,14 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board();
         $hands = [
             0 => new Hand(),
             1 => new Hand(),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $canPass = $game->canPass();
@@ -54,6 +57,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '0,0' => [[0, 'Q']],
             '1,0' => [[1, 'Q']],
@@ -67,7 +71,7 @@ class GameSpec extends TestCase
             ]),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $canPass = $game->canPass();
@@ -81,13 +85,14 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board();
         $hands = [
             0 => new Hand(),
             1 => new Hand(),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $winner = $game->getWinner();
@@ -101,6 +106,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '0,0' => [[1, 'Q']],
             '0,-1' => [[0, 'B']],
@@ -115,7 +121,7 @@ class GameSpec extends TestCase
             1 => new Hand(),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $winner = $game->getWinner();
@@ -129,6 +135,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '0,0' => [[0, 'Q']],
             '0,-1' => [[1, 'B']],
@@ -143,7 +150,7 @@ class GameSpec extends TestCase
             1 => new Hand(),
         ];
         $currentPlayer = 1;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $winner = $game->getWinner();
@@ -157,6 +164,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '0,0' => [[1, 'Q'], [0, 'B']],
             '0,-1' => [[0, 'S']],
@@ -171,7 +179,7 @@ class GameSpec extends TestCase
             1 => new Hand(),
         ];
         $currentPlayer = 0;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $winner = $game->getWinner(true);
@@ -185,6 +193,7 @@ class GameSpec extends TestCase
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
         $board = new Board([
             '0,0' => [[0, 'Q']],
             '1,0' => [[1, 'Q']],
@@ -202,7 +211,7 @@ class GameSpec extends TestCase
             1 => new Hand(),
         ];
         $currentPlayer = 1;
-        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer);
 
         // act
         $winner = $game->getWinner();
