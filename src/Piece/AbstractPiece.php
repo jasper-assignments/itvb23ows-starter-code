@@ -3,6 +3,7 @@
 namespace App\Piece;
 
 use App\Entity\Board;
+use App\Exception\PieceDoesNotExistException;
 use Exception;
 
 abstract class AbstractPiece
@@ -17,7 +18,7 @@ abstract class AbstractPiece
             'B' => new Beetle($board),
             'A' => new SoldierAnt($board),
             'S' => new Spider($board),
-            default => throw new Exception("Piece with letter '$letter' does not exist"),
+            default => throw new PieceDoesNotExistException($letter),
         };
     }
 
