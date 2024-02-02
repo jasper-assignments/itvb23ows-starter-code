@@ -108,22 +108,25 @@ class Game
     /**
      * @throws InvalidMoveException
      */
-    public function play(string $piece, string $to): void
+    public function play(string $piece, string $to, bool $force = false): void
     {
         $hand = $this->hands[$this->currentPlayer];
 
-        if (!$hand->hasPiece($piece)) {
-            throw new InvalidMoveException('Player does not have tile');
-        }
+        // if move is forced (i.e. it's played by AI) then skip move validation
+        if (!$force) {
+            if (!$hand->hasPiece($piece)) {
+                throw new InvalidMoveException('Player does not have tile');
+            }
 
-        // Ensure queen bee must be played in the fourth turn
-        if ($piece != 'Q' && $hand->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
-            throw new InvalidMoveException('Must play queen bee');
-        }
+            // Ensure queen bee must be played in the fourth turn
+            if ($piece != 'Q' && $hand->getTotalSum() <= 8 && $hand->hasPiece('Q')) {
+                throw new InvalidMoveException('Must play queen bee');
+            }
 
-        [$valid, $err] = $this->isPlayValid($to);
-        if (!$valid) {
-            throw new InvalidMoveException($err);
+            [$valid, $err] = $this->isPlayValid($to);
+            if (!$valid) {
+                throw new InvalidMoveException($err);
+            }
         }
 
         $this->board->setPosition($to, $this->currentPlayer, $piece);
