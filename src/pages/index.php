@@ -15,6 +15,7 @@
     $board = $game->getBoard();
     $hands = $game->getHands();
     $currentPlayer = $game->getCurrentPlayer();
+    $winner = $game->getWinner();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,43 +132,57 @@
                 }
             ?>
         </div>
-        <form method="post" action="/play">
-            <select name="piece">
-                <?php
-                    foreach ($hands[$currentPlayer]->getAvailablePieces() as $tile => $ct) {
-                        echo "<option value=\"$tile\">$tile</option>";
+        <?php if ($winner !== null): ?>
+            <strong><?php
+                if ($winner === -1) {
+                    echo 'It\'s a tie!';
+                } else {
+                    $winnerLabel = 'White';
+                    if ($winner === 1) {
+                        $winnerLabel = 'Black';
                     }
-                ?>
-            </select>
-            <select name="to">
-                <?php
-                    foreach ($game->getValidPlayPositions() as $pos) {
-                        echo "<option value=\"$pos\">$pos</option>";
-                    }
-                ?>
-            </select>
-            <input type="submit" value="Play">
-        </form>
-        <form method="post" action="/move">
-            <select name="from">
-                <?php
-                    foreach ($board->getAllPositionsOwnedByPlayer($currentPlayer) as $pos) {
-                        echo "<option value=\"$pos\">$pos</option>";
-                    }
-                ?>
-            </select>
-            <select name="to">
-                <?php
-                    foreach ($game->getToPositions() as $pos) {
-                        echo "<option value=\"$pos\">$pos</option>";
-                    }
-                ?>
-            </select>
-            <input type="submit" value="Move">
-        </form>
-        <form method="post" action="/pass">
-            <input type="submit" value="Pass">
-        </form>
+                    echo "$winnerLabel won!";
+                }
+            ?></strong>
+        <?php else: ?>
+            <form method="post" action="/play">
+                <select name="piece">
+                    <?php
+                        foreach ($hands[$currentPlayer]->getAvailablePieces() as $tile => $ct) {
+                            echo "<option value=\"$tile\">$tile</option>";
+                        }
+                    ?>
+                </select>
+                <select name="to">
+                    <?php
+                        foreach ($game->getValidPlayPositions() as $pos) {
+                            echo "<option value=\"$pos\">$pos</option>";
+                        }
+                    ?>
+                </select>
+                <input type="submit" value="Play">
+            </form>
+            <form method="post" action="/move">
+                <select name="from">
+                    <?php
+                        foreach ($board->getAllPositionsOwnedByPlayer($currentPlayer) as $pos) {
+                            echo "<option value=\"$pos\">$pos</option>";
+                        }
+                    ?>
+                </select>
+                <select name="to">
+                    <?php
+                        foreach ($game->getToPositions() as $pos) {
+                            echo "<option value=\"$pos\">$pos</option>";
+                        }
+                    ?>
+                </select>
+                <input type="submit" value="Move">
+            </form>
+            <form method="post" action="/pass">
+                <input type="submit" value="Pass">
+            </form>
+        <?php endif; ?>
         <form method="post" action="/restart">
             <input type="submit" value="Restart">
         </form>
