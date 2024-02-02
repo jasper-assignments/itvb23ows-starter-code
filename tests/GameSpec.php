@@ -121,7 +121,7 @@ class GameSpec extends TestCase
         $winner = $game->getWinner();
 
         // assert
-        $this->assertEquals(0, $winner);
+        $this->assertSame(0, $winner);
     }
 
     #[Test]
@@ -149,6 +149,6 @@ class GameSpec extends TestCase
         $winner = $game->getWinner();
 
         // assert
-        $this->assertEquals(1, $winner);
+        $this->assertSame(1, $winner);
     }
 }
