@@ -277,11 +277,20 @@ class Game
     {
         $queenPosBlack = $this->board->getPositionOfTile(1, 'Q');
         $queenPosWhite = $this->board->getPositionOfTile(0, 'Q');
+
+        $winners = [];
         if ($queenPosBlack != null && $this->board->isPositionSurrounded($queenPosBlack)) {
-            return 0;
-        } elseif ($queenPosWhite != null && $this->board->isPositionSurrounded($queenPosWhite)) {
-            return 1;
+            $winners[] = 0;
         }
+        if ($queenPosWhite != null && $this->board->isPositionSurrounded($queenPosWhite)) {
+            $winners[] = 1;
+        }
+
+        $winnerCount = count($winners);
+        if ($winnerCount > 0) {
+            return $winnerCount > 1 ? -1 : $winners[0];
+        }
+
         return null;
     }
 }
