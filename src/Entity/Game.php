@@ -303,7 +303,7 @@ class Game
 
     public function canUndo(): bool
     {
-        return true;
+        return $this->moveNumber > 0;
     }
 
     public function getWinner(): ?int
