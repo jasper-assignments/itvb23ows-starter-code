@@ -28,4 +28,24 @@ class GameSpec extends TestCase
         // assert
         $this->assertTrue($canPass);
     }
+
+    #[Test]
+    public function givenFullHandAndEmptyBoardThenCanPassIsFalse()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board();
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 0;
+        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+
+        // act
+        $canPass = $game->canPass();
+
+        // assert
+        $this->assertFalse($canPass);
+    }
 }
