@@ -74,7 +74,7 @@ class AiSpec extends TestCase
     }
 
     #[Test]
-    public function givenDataThenEnsurePostGetsCalledWithRightParameters()
+    public function whenGettingSuggestionThenPostShouldGetCalledWithRightParameters()
     {
         // arrange
         $guzzleClientSpy = Mockery::spy(Client::class);
@@ -104,7 +104,7 @@ class AiSpec extends TestCase
     }
 
     #[Test]
-    public function givenDataThenEnsurePostResponseGetsDecodedCorrectly()
+    public function whenGettingSuggestionThenPostResponseShouldBeDecodedCorrectly()
     {
         // arrange
         $guzzleClientMock = Mockery::mock(Client::class);
