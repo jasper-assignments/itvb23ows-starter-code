@@ -147,6 +147,9 @@ session_start();
                 }
             ?></strong>
         <?php else: ?>
+            <form method="post" action="/ai">
+                <input type="submit" value="AI Move">
+            </form>
             <form method="post" action="/play">
                 <select name="piece">
                     <?php
