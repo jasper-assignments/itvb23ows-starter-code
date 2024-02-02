@@ -159,6 +159,7 @@ class Game
             $to,
             $_SESSION['last_move']
         );
+        $this->moveNumber += 1;
     }
 
     /**
