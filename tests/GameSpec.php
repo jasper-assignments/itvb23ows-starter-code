@@ -123,4 +123,32 @@ class GameSpec extends TestCase
         // assert
         $this->assertEquals(0, $winner);
     }
+
+    #[Test]
+    public function givenWhiteQueenSurroundedThenWinnerIsBlack()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board([
+            '0,0' => [[0, 'Q']],
+            '0,-1' => [[1, 'B']],
+            '1,-1' => [[0, 'A']],
+            '1,0' => [[1, 'S']],
+            '0,1' => [[0, 'G']],
+            '-1,1' => [[1, 'A']],
+            '-1,0' => [[0, 'G']],
+        ]);
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 1;
+        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+
+        // act
+        $winner = $game->getWinner();
+
+        // assert
+        $this->assertEquals(1, $winner);
+    }
 }
