@@ -11,7 +11,10 @@ class Spider extends AbstractPiece
         $board = clone $this->board;
         $board->popTile($from);
 
-        if (!$board->isPositionEmpty($to)) {
+        if ($from == $to) {
+            $this->setErrorMessage('Tile must move');
+            return false;
+        } elseif (!$board->isPositionEmpty($to)) {
             $this->setErrorMessage('Tile not empty');
             return false;
         } elseif (!$this->canDestinationBeReachedBySlidingThreeTimes($board, $from, $to)) {
