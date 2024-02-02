@@ -328,6 +328,8 @@ class Game
             $this->play($suggestion[1], $suggestion[2], true);
         } elseif ($suggestion[0] == 'move') {
             $this->move($suggestion[1], $suggestion[2], true);
+        } elseif ($suggestion[0] == 'pass') {
+            $this->pass(true);
         }
     }
 }
