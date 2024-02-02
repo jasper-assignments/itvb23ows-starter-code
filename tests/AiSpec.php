@@ -102,4 +102,25 @@ class AiSpec extends TestCase
             ]
         ]);
     }
+
+    #[Test]
+    public function givenDataThenEnsurePostResponseGetsDecodedCorrectly()
+    {
+        // arrange
+        $guzzleClientMock = Mockery::mock(Client::class);
+        $guzzleClientMock->allows('post')->andReturn(new Response(body: '["play", "B", "0,0"]'));
+        $ai = new Ai($guzzleClientMock);
+        $moveNumber = 1;
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $board = new Board();
+
+        // act
+        $suggestion = $ai->getSuggestion($moveNumber, $hands, $board);
+
+        // assert
+        $this->assertSame(['play', 'B', '0,0'], $suggestion);
+    }
 }
