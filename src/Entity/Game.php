@@ -276,8 +276,11 @@ class Game
     public function getWinner(): ?int
     {
         $queenPosBlack = $this->board->getPositionOfTile(1, 'Q');
+        $queenPosWhite = $this->board->getPositionOfTile(0, 'Q');
         if ($queenPosBlack != null && $this->board->isPositionSurrounded($queenPosBlack)) {
             return 0;
+        } elseif ($queenPosWhite != null && $this->board->isPositionSurrounded($queenPosWhite)) {
+            return 1;
         }
         return null;
     }
