@@ -137,7 +137,7 @@ class Board
             );
     }
 
-    public function getNeighbourPositions(string $pos, Callable $filterFunction): array
+    public function getNeighbourPositions(string $pos, callable $filterFunction): array
     {
         $b = explode(',', $pos);
         $neighbours = [];
