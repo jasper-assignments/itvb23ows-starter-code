@@ -97,7 +97,11 @@ class DefaultController
         session_start();
 
         $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
-        $game->undo();
+        try {
+            $game->undo();
+        } catch (InvalidMoveException $exception) {
+            $_SESSION['error'] = $exception->getMessage();
+        }
         $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse('/');

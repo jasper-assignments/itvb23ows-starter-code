@@ -189,10 +189,16 @@ class Game
         $this->switchCurrentPlayer();
     }
 
+    /**
+     * @throws InvalidMoveException
+     */
     public function undo(): void
     {
         $result = $this->database->findMoveById($_SESSION['last_move']);
         $_SESSION['last_move'] = $result[5];
+        if (!$this->canUndo()) {
+            throw new InvalidMoveException('Player cannot undo right now');
+        }
         $this->setState($result[6]);
     }
 
