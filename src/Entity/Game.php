@@ -122,6 +122,7 @@ class Game
      */
     public function play(string $piece, string $to, bool $force = false): void
     {
+        $previousState = $this->getState();
         $hand = $this->hands[$this->currentPlayer];
 
         // if play is forced (i.e. it's played by AI) then skip validation
@@ -150,7 +151,7 @@ class Game
             $piece,
             $to,
             $this->lastMoveId,
-            $this->getState()
+            $previousState
         );
         $this->moveNumber += 1;
     }
