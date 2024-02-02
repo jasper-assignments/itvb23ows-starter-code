@@ -39,7 +39,7 @@ class Ai
      * @return array{string, ?string, ?string}
      * @throws GuzzleException
      */
-    public function getSuggestion(int $moveNumber, array $hands, Board $board)
+    public function getSuggestion(int $moveNumber, array $hands, Board $board): array
     {
         $response = $this->client->post('', [
             'json' => $this->buildBody($moveNumber, $hands, $board),
