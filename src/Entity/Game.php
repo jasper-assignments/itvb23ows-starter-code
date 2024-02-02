@@ -70,6 +70,7 @@ class Game
         $this->board = $state['board'];
         $this->hands = $state['hands'];
         $this->currentPlayer = $state['currentPlayer'];
+        $this->moveNumber = $state['moveNumber'];
     }
 
     public function getId(): int
