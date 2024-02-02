@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class AiSpec extends TestCase
 {
     #[Test]
-    public function givenIntMoveNumberThenBuildBodyAddsCorrectlyToArray()
+    public function givenIntMoveNumberThenBuildBodyAddsCorrectlyToBody()
     {
         // arrange
         $guzzleClientMock = Mockery::mock(Client::class);
