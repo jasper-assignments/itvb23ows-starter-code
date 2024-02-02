@@ -161,6 +161,8 @@ class Game
      */
     public function move(string $from, string $to, bool $force = false): void
     {
+        $previousState = $this->getState();
+
         // if move is forced (i.e. it's played by AI) then skip validation
         if (!$force) {
             [$valid, $err] = $this->isMoveValid($from, $to);
@@ -178,7 +180,7 @@ class Game
             $from,
             $to,
             $this->lastMoveId,
-            $this->getState()
+            $previousState
         );
         $this->moveNumber += 1;
     }
