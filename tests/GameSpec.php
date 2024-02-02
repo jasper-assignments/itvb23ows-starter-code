@@ -75,4 +75,24 @@ class GameSpec extends TestCase
         // assert
         $this->assertFalse($canPass);
     }
+
+    #[Test]
+    public function givenOngoingGameThenWinnerIsNull()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $board = new Board();
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 0;
+        $game = new Game($databaseMock, -1, $board, $hands, $currentPlayer);
+
+        // act
+        $winner = $game->getWinner();
+
+        // assert
+        $this->assertNull($winner);
+    }
 }

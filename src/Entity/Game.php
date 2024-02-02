@@ -272,4 +272,9 @@ class Game
         }
         return true;
     }
+
+    public function getWinner(): ?int
+    {
+        return null;
+    }
 }
