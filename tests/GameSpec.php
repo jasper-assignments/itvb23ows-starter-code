@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 class GameSpec extends TestCase
 {
     #[Test]
-    public function givenEmptyHandAndEmptyBoardThenCanPassIsTrue()
+    public function givenNoValidPlayAndNoValidMoveThenCanPassIsTrue()
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
@@ -30,7 +30,7 @@ class GameSpec extends TestCase
     }
 
     #[Test]
-    public function givenFullHandAndEmptyBoardThenCanPassIsFalse()
+    public function givenValidPlayThenCanPassIsFalse()
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
@@ -50,7 +50,7 @@ class GameSpec extends TestCase
     }
 
     #[Test]
-    public function givenOnlyValidMoveThenCanPassIsFalse()
+    public function givenValidMoveThenCanPassIsFalse()
     {
         // arrange
         $databaseMock = Mockery::mock(Database::class);
