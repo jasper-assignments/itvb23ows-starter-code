@@ -240,10 +240,27 @@ class Game
         return array_filter($this->getToPositions(), fn($pos) => $this->isPlayValid($pos)[0]);
     }
 
+    public function hasValidMovePosition(): bool
+    {
+        $ownedPositions = $this->board->getAllPositionsOwnedByPlayer($this->currentPlayer);
+        $toPositions = $this->getToPositions();
+        foreach ($ownedPositions as $from) {
+            foreach ($toPositions as $to) {
+                [$valid, $err] = $this->isMoveValid($from, $to);
+                if ($valid) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public function canPass(): bool
     {
         $hand = $this->hands[$this->currentPlayer];
         if (count($hand->getAvailablePieces()) > 0) {
+            return false;
+        } elseif ($this->hasValidMovePosition()) {
             return false;
         }
         return true;
