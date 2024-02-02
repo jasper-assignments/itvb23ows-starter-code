@@ -28,21 +28,21 @@ class SoldierAnt extends AbstractPiece
         Board $board,
         string $current,
         string $destination,
-        string $lastVisited = null
-    ): bool
-    {
+        array $visited = []
+    ): bool {
         if ($current == $destination) {
             return true;
         }
 
         $emptyNeighbours = $board->getNeighbourPositions($current, fn($neighbour) => $board->isPositionEmpty($neighbour));
         foreach ($emptyNeighbours as $neighbor) {
-            if ($neighbor == $lastVisited) {
+            if (in_array($neighbor, $visited)) {
                 continue;
             }
 
             if ($board->slide($current, $neighbor)) {
-                if ($this->canDestinationBeReachedBySliding($board, $neighbor, $destination, $current)) {
+                $visited[] = $current;
+                if ($this->canDestinationBeReachedBySliding($board, $neighbor, $destination, $visited)) {
                     return true;
                 }
             }
