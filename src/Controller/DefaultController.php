@@ -102,4 +102,15 @@ class DefaultController
 
         return new RedirectResponse('/');
     }
+
+    public function ai(): Response
+    {
+        session_start();
+
+        $game = Game::createFromState($this->database, $this->ai, $_SESSION['game_state']);
+        $game->makeAiMove();
+        $_SESSION['game_state'] = $game->getState();
+
+        return new RedirectResponse('/');
+    }
 }

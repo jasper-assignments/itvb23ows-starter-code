@@ -9,6 +9,7 @@ $routes = [
     'pass' => [DefaultController::class, 'pass'],
     'restart' => [DefaultController::class, 'restart'],
     'undo' => [DefaultController::class, 'undo'],
+    'ai' => [DefaultController::class, 'ai'],
 ];
 
 return $routes;
