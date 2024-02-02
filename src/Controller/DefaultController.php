@@ -69,7 +69,11 @@ class DefaultController
         session_start();
 
         $game = Game::createFromState($this->database, $_SESSION['game_state']);
-        $game->pass();
+        try {
+            $game->pass();
+        } catch (InvalidMoveException $exception) {
+            $_SESSION['error'] = $exception->getMessage();
+        }
         $_SESSION['game_state'] = $game->getState();
 
         return new RedirectResponse('/');

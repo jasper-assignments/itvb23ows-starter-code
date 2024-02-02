@@ -145,8 +145,15 @@ class Game
         );
     }
 
+    /**
+     * @throws InvalidMoveException
+     */
     public function pass(): void
     {
+        if (!$this->canPass()) {
+            throw new InvalidMoveException('Player cannot pass right now');
+        }
+
         $_SESSION['last_move'] = $this->database->createPassMove(
             $this,
             $_SESSION['last_move']

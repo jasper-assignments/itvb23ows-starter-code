@@ -122,37 +122,34 @@ class GameTest extends TestCase
             $databaseMock,
             -1,
             new Board([
-                '0,0' => [[0, 'Q']],
-                '0,1' => [[1, 'Q']],
-                '0,-1' => [[0, 'B']],
-                '0,2' => [[1, 'B']],
+                '0,0' => [[1, 'Q']],
+                '0,1' => [[0, 'Q']],
+                '0,-1' => [[0, 'A']],
             ]),
             [
                 0 => new Hand([
                     'Q' => 0,
-                    'B' => 1,
+                    'B' => 2,
                     'S' => 2,
                     'A' => 3,
                     'G' => 3,
                 ]),
                 1 => new Hand([
                     'Q' => 0,
-                    'B' => 1,
+                    'B' => 2,
                     'S' => 2,
-                    'A' => 3,
+                    'A' => 2,
                     'G' => 3,
                 ]),
             ],
             0
         );
         $databaseMock->allows()
-            ->createMove($game, 'move', '0,-1', '0,0', null)
+            ->createMove($game, 'move', '0,-1', '0,2', null)
             ->andReturn(1);
-        $databaseMock->allows()->createPassMove($game, 1);
 
         // act
-        $game->move('0,-1', '0,0');
-        $game->pass();
+        $game->move('0,-1', '0,2');
         [$valid, $err] = $game->isPlayValid('0,-1');
 
         // assert
