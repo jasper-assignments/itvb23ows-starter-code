@@ -20,9 +20,10 @@ class AiSpec extends TestCase
             0 => new Hand(),
             1 => new Hand(),
         ];
+        $board = new Board();
 
         // act
-        $body = $ai->buildBody($moveNumber, $hands);
+        $body = $ai->buildBody($moveNumber, $hands, $board);
 
         // assert
         $this->assertSame(1, $body['move_number']);
@@ -39,9 +40,10 @@ class AiSpec extends TestCase
             0 => new Hand(),
             1 => new Hand(),
         ];
+        $board = new Board();
 
         // act
-        $body = $ai->buildBody($moveNumber, $hands);
+        $body = $ai->buildBody($moveNumber, $hands, $board);
 
         // assert
         $this->assertSame($hands[0]->getPieces(), $body['hand'][0]);

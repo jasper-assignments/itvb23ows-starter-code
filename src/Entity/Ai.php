@@ -16,9 +16,10 @@ class Ai
     /**
      * @param int $moveNumber
      * @param array{Hand, Hand} $hands
+     * @param Board $board
      * @return array
      */
-    public function buildBody(int $moveNumber, array $hands): array
+    public function buildBody(int $moveNumber, array $hands, Board $board): array
     {
         return [
             'move_number' => $moveNumber,
@@ -26,6 +27,7 @@ class Ai
                 $hands[0]->getPieces(),
                 $hands[1]->getPieces(),
             ],
+            'board' => $board->getTiles(),
         ];
     }
 }
