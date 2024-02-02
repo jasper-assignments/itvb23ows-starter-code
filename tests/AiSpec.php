@@ -13,12 +13,12 @@ class AiSpec extends TestCase
         // arrange
         $guzzleClientMock = Mockery::mock(Client::class);
         $ai = new Ai($guzzleClientMock);
+        $moveNumber = 1;
 
         // act
-        $body = $ai->buildBody(1);
-        $moveNumber = $body['move_number'];
+        $body = $ai->buildBody($moveNumber);
 
         // assert
-        $this->assertSame(1, $moveNumber);
+        $this->assertSame(1, $body['move_number']);
     }
 }
