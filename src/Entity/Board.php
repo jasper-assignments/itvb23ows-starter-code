@@ -184,9 +184,11 @@ class Board
     {
         $positions = $this->getAllOccupiedPositions();
         foreach ($positions as $pos) {
-            $tile = $this->getCurrentTileOnPosition($pos);
-            if ($tile[0] == $player && $tile[1] == $piece) {
-                return $pos;
+            $tilesOnPosition = $this->tiles[$pos];
+            foreach ($tilesOnPosition as $tile) {
+                if ($tile[0] == $player && $tile[1] == $piece) {
+                    return $pos;
+                }
             }
         }
         return null;
