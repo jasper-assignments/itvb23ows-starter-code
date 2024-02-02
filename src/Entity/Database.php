@@ -56,15 +56,12 @@ class Database
         return $stmt->get_result()->fetch_all();
     }
 
-    public function createMove(Game $game, string $type, string $moveFrom, string $moveTo, ?int $lastMoveId): int
+    public function createMove(int $gameId, string $type, string $moveFrom, string $moveTo, ?int $lastMoveId, string $state): int
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
             VALUES (?, ?, ?, ?, ?, ?)
         ');
-
-        $state = $game->getState();
-        $gameId = $game->getId();
 
         $stmt->bind_param('isssis', $gameId, $type, $moveFrom, $moveTo, $lastMoveId, $state);
         $stmt->execute();
@@ -72,15 +69,13 @@ class Database
         return $stmt->insert_id;
     }
 
-    public function createPassMove(Game $game, ?int $lastMoveId): int
+    public function createPassMove(int $gameId, ?int $lastMoveId, string $state): int
     {
         $stmt = $this->connection->prepare('
             INSERT INTO moves (game_id, type, move_from, move_to, previous_id, state)
             VALUES (?, ?, null, null, ?, ?)
         ');
 
-        $state = $game->getState();
-        $gameId = $game->getId();
         $type = 'pass';
 
         $stmt->bind_param('isis', $gameId, $type, $lastMoveId, $state);
