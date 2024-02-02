@@ -213,4 +213,38 @@ class GameTest extends TestCase
         // assert
         $this->assertFalse($canUndo);
     }
+
+    public function testUndoGoesBackToPreviousStateAfterPlaying()
+    {
+        // arrange
+        $databaseMock = Mockery::mock(Database::class);
+        $aiMock = Mockery::mock(Ai::class);
+        $board = new Board([
+            '0,0' => [[0, 'Q']],
+            '0,1' => [[1, 'Q']],
+        ]);
+        $hands = [
+            0 => new Hand(),
+            1 => new Hand(),
+        ];
+        $currentPlayer = 0;
+        $moveNumber = 2;
+        $lastMoveId = 2;
+        $game = new Game($databaseMock, $aiMock, -1, $board, $hands, $currentPlayer, $moveNumber, $lastMoveId);
+        $initialGameState = $game->getState();
+        $databaseMock->allows('createMove')
+            ->with(-1, 'play', 'B', '0,-1', 2, $initialGameState)
+            ->andReturns(3);
+        $databaseMock->allows('findMoveById')
+            ->with(3)
+            ->andReturns([5 => 2, 6 => $initialGameState]);
+
+        // act
+        $game->play('B', '0,-1');
+        $game->undo();
+        $gameSate = $game->getState();
+
+        // assert
+        $this->assertEquals($initialGameState, $gameSate);
+    }
 }
