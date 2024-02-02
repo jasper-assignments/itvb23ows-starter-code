@@ -112,7 +112,7 @@ class Game
     {
         $hand = $this->hands[$this->currentPlayer];
 
-        // if move is forced (i.e. it's played by AI) then skip move validation
+        // if play is forced (i.e. it's played by AI) then skip validation
         if (!$force) {
             if (!$hand->hasPiece($piece)) {
                 throw new InvalidMoveException('Player does not have tile');
@@ -146,11 +146,14 @@ class Game
     /**
      * @throws InvalidMoveException
      */
-    public function move(string $from, string $to): void
+    public function move(string $from, string $to, bool $force = false): void
     {
-        [$valid, $err] = $this->isMoveValid($from, $to);
-        if (!$valid) {
-            throw new InvalidMoveException($err);
+        // if move is forced (i.e. it's played by AI) then skip validation
+        if (!$force) {
+            [$valid, $err] = $this->isMoveValid($from, $to);
+            if (!$valid) {
+                throw new InvalidMoveException($err);
+            }
         }
 
         $tile = $this->board->popTile($from);
