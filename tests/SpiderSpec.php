@@ -17,7 +17,7 @@ class SpiderSpec extends TestCase
             '1,0' => [[1, 'Q']],
         ]);
         $spider = new Spider($board);
-        $from = '0,0';
+        $from = '1,-1';
         $to = '-1,1';
 
         // act
@@ -55,11 +55,11 @@ class SpiderSpec extends TestCase
         $board = new Board([
             '1,-1' => [[0, 'S']],
             '0,0' => [[0, 'Q']],
-            '1,0' => [[1, 'Q']],
+            '0,1' => [[1, 'Q']],
             '-1,1' => [[1, 'B']],
         ]);
         $spider = new Spider($board);
-        $from = '0,0';
+        $from = '1,-1';
         $to = '0,2';
 
         // act
