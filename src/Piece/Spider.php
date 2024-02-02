@@ -15,7 +15,7 @@ class Spider extends AbstractPiece
             $this->setErrorMessage('Tile not empty');
             return false;
         } elseif (!$this->canDestinationBeReachedBySlidingThreeTimes($board, $from, $to)) {
-            $this->setErrorMessage('Tile must slide');
+            $this->setErrorMessage('Tile must slide exactly 3 times');
             return false;
         }
         return true;
