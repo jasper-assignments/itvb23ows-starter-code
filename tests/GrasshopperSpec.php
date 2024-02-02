@@ -102,7 +102,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenEmptyPlacesBeforeDestinationThenMoveValidIsFalse()
+    public function givenEmptyPositionsBeforeDestinationThenMoveValidIsFalse()
     {
         // arrange
         $board = new Board([
@@ -120,7 +120,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenOccupiedPlacesBeforeDestinationThenMoveValidIsTrue()
+    public function givenOccupiedPositionsBeforeDestinationThenMoveValidIsTrue()
     {
         // arrange
         $board = new Board([
@@ -140,7 +140,7 @@ class GrasshopperSpec extends TestCase
     }
 
     #[Test]
-    public function givenCurrentPlaceAsDestinationThenMoveValidIsFalse()
+    public function givenCurrentPositionAsDestinationThenMoveValidIsFalse()
     {
         // arrange
         $board = new Board([
