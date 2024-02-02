@@ -136,6 +136,7 @@ class Game
             $to,
             $_SESSION['last_move']
         );
+        $this->moveNumber += 1;
     }
 
     /**
@@ -307,5 +308,9 @@ class Game
         }
 
         return null;
+    }
+
+    public function makeAiMove(): void
+    {
     }
 }
